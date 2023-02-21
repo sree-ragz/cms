@@ -1,0 +1,6 @@
+/myenv
+pro/pro/__pycache__
+pro/prof/__pycache__
+pro/prof/migrations/__pycache__
+pro/db.sqlite3
+pro/static/images
