@@ -9,5 +9,5 @@ urlpatterns = [
     path('logout/',views.logoutpage,name='logout'),
     path('token/',views.token_sent,name='token_sent'),
     path('verify/<uid>',views.verify,name='verify'),
-    # path('settings/',views.Editprofile.as_view(),name='settings'),
+    path('settings/',views.Editprofile,name='settings'),
 ]

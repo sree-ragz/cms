@@ -16,3 +16,7 @@ class Registration2Form(ModelForm):
 
 
 
+class EditForm(ModelForm):
+    class Meta:
+        model=Participant
+        fields=['name','email','designation','organization','photo','ph_no']

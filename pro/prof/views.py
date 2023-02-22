@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from .forms import *
@@ -96,25 +96,32 @@ def register2(request):
             # Participant_obj=Participant.objects.create(user=request.user,)
       
       
-# def Editprofile(request):
-#      form=Registration2Form(request.user.get())
-#      if request.method =="POST":
-#             form=Registration2Form(request.POST,request.FILES)
-#             if form.is_valid():
-#                   participant=form.save(commit=False)
+def Editprofile(request):
+    #  user = User.objects.filter(id = request.user.id)[0]
+    #  print(user)
+    #  user=get_object_or_404(User,id=request.user.id)
+     user=request.user
+    #  print(user)
+     participant_obj=Participant.objects.get(user=user)
+     print(participant_obj)
+     
+     if request.method =="POST":
+            form=EditForm(request.POST,request.FILES,instance=participant_obj)
+            if form.is_valid():
+                  participant=form.save(commit=False)
                   
-#                   participant.save()
-#                   return redirect('settings')
-    
-#      return render(request,'profile.html',{'form':form})
+                  participant.save()
+                  return redirect('settings')
+     form=EditForm(instance=participant_obj)
+     return render(request,'profile.html',{'form':form,'participant_obj':participant_obj})
 
-class Editprofile(UpdateView):
-     model=Participant
-     fields=['name','email','designation','organization','photo','ph_no']
-     template_name='profile.html'
+# class Editprofile(UpdateView):
+#      model=Participant
+#      fields=['name','email','designation','organization','photo','ph_no']
+#      template_name='profile.html'
 
-     def get_object(self):
-          return self.request.user
+#      def get_object(self):
+#           return self.request.user
      
 
 
