@@ -26,3 +26,8 @@ class PaperSubmitionForm(ModelForm):
     class Meta:
         model=PaperSubmition
         fields=['papername','abstract','paperfile']
+
+class EditPaperSubmitionForm(ModelForm):
+    class Meta:
+        model=PaperSubmition
+        fields=['papername','abstract','paperfile']

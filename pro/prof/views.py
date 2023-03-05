@@ -124,17 +124,22 @@ def Editprofile(request):
      user=request.user
     
      participant_obj=Participant.objects.get(user=user)
+     papersubmition_obj=PaperSubmition.objects.get(userid=user)
      print(participant_obj)
      
      if request.method =="POST":
             form=EditForm(request.POST,request.FILES,instance=participant_obj)
-            if form.is_valid():
+            papereditform=EditPaperSubmitionForm(request.POST,request.FILES,instance=papersubmition_obj)
+            if form.is_valid() and papereditform.is_valid():
                   participant=form.save(commit=False)
                   
                   participant.save()
+                  papersubmition=papereditform.save(commit=False)
+                  papersubmition.save()
                   return redirect('settings')
      form=EditForm(instance=participant_obj)
-     return render(request,'profile.html',{'form':form,'participant_obj':participant_obj})
+     papereditform=EditPaperSubmitionForm(instance=papersubmition_obj)
+     return render(request,'profile.html',{'form':form,'participant_obj':participant_obj,'form2':papereditform,'papersubmition_obj':papersubmition_obj})
 
 
 
@@ -160,7 +165,7 @@ def loginpage(request):
                     return redirect('/login')
                 
                 participant_obj=Participant.objects.get(user=user)
-                if participant_obj.Rstatus:
+                if participant_obj.Rstatus=='D':
                     messages.success(request, 'account deactivated')
                     return redirect('/login')
                     
