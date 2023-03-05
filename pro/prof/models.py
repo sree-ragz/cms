@@ -21,4 +21,11 @@ class Participant(models.Model):
         return self.name
     
     
-   
+class PaperSubmition(models.Model):
+    userid=models.ForeignKey(User,on_delete=models.CASCADE)
+    papername=models.CharField(max_length=200)
+    abstract=models.CharField(max_length=200)
+    paperfile=models.FileField(upload_to='uploads/')
+    track=models.CharField(max_length=200,null=True,default='h')
+
+    

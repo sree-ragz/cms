@@ -10,4 +10,5 @@ urlpatterns = [
     path('token/',views.token_sent,name='token_sent'),
     path('verify/<uid>',views.verify,name='verify'),
     path('settings/',views.Editprofile,name='settings'),
+    path('papersubmition/',views.papersubmition,name='papersubmition'),
 ]

@@ -47,7 +47,7 @@ def register(request):
                     user.is_active=False
                     user=form.save()
 
-                    print(user)
+                    # print(user)
                     # group=Group.objects.get(name='user')
                     # user.groups.add(group)
                     
@@ -84,24 +84,45 @@ def verify(request,uid):
 def register2(request):
     form2=Registration2Form()
     if request.method =="POST":
+            papersubmition=request.POST.get('papersubmition')
+            print(papersubmition)
             form2=Registration2Form(request.POST,request.FILES)
             if form2.is_valid():
+                
+                  
                   participant=form2.save(commit=False)
                   participant.user = request.user
-                  print(participant)
+                #   print(participant)
                   participant.save()
-                  return redirect('/')
+                  if papersubmition == 'True' :
+                       return redirect('papersubmition')
+                  else:
+                       
+                       return redirect('/')
     
     return render(request,'registration2.html',{'form2':form2})
-            # Participant_obj=Participant.objects.create(user=request.user,)
+            
       
-      
+def papersubmition(request):
+     form=PaperSubmitionForm()
+
+     if request.method =='POST':
+          form=PaperSubmitionForm(request.POST,request.FILES)
+          if form.is_valid():
+               papersubmition=form.save(commit=False)
+               papersubmition.userid=request.user
+               papersubmition.save()
+               return redirect('/') 
+     return render(request,'papersubmition.html',{'form':form})  
+
+
+
+
+
 def Editprofile(request):
-    #  user = User.objects.filter(id = request.user.id)[0]
-    #  print(user)
-    #  user=get_object_or_404(User,id=request.user.id)
+    
      user=request.user
-    #  print(user)
+    
      participant_obj=Participant.objects.get(user=user)
      print(participant_obj)
      
@@ -115,14 +136,7 @@ def Editprofile(request):
      form=EditForm(instance=participant_obj)
      return render(request,'profile.html',{'form':form,'participant_obj':participant_obj})
 
-# class Editprofile(UpdateView):
-#      model=Participant
-#      fields=['name','email','designation','organization','photo','ph_no']
-#      template_name='profile.html'
 
-#      def get_object(self):
-#           return self.request.user
-     
 
 
 @unauthenticated_user
@@ -145,10 +159,10 @@ def loginpage(request):
                     messages.success(request, 'wrong password')
                     return redirect('/login')
                 
-                # participant_obj=Participant.objects.filter(user=user_obj)
-                # if participant_obj.Rstatus:
-                #     messages.success(request, 'account deactivated')
-                #     return redirect('/login')
+                participant_obj=Participant.objects.get(user=user)
+                if participant_obj.Rstatus:
+                    messages.success(request, 'account deactivated')
+                    return redirect('/login')
                     
                 user = authenticate(request,username=username,password=password)
                 if user is not None:
