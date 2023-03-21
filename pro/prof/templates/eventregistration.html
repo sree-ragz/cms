@@ -1,0 +1,265 @@
+{% extends 'dashboardnav.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="container">
+  <div  class="row flex-column-reverse flex-md-row">
+    <div class="col-md-4 d-flex flex-column justify-content-center ">
+     
+        <div>
+
+
+          {% if userevents.paper is True or userevents.poster is True %}
+
+{% else %}
+{% if userevents %}
+<button class="btn btn-success btn-lg  mt-5 w-75"> Already registered</button>
+{% else %}
+<button type="button" class="btn btn-primary btn-lg  mt-5 w-75" data-bs-toggle="modal" data-bs-target="#registerasparticipant">
+
+Register as participant
+</button>
+
+{% endif %}
+{% endif %}
+
+         
+         
+
+        </div>
+        {% if event.paper_submited %}
+        <div>
+
+         
+          <!-- Button trigger modal -->
+          
+          
+          {% if userevents.paper is True %}
+          <button class="btn btn-success btn-lg  mt-5 w-75">Paper already submited</button>
+          {% else %}
+          <button type="button" class="btn btn-primary btn-lg  mt-5 w-75" data-bs-toggle="modal" data-bs-target="#Papersubmition">
+              Submit Paper
+            </button>
+          {% endif %}
+         
+          
+
+          
+        </div>
+        {% endif %}
+        {% if event.poster_submited %}
+        <div>
+         
+
+          {% if userevents.poster is True %}
+        
+         
+          <button class="btn btn-success btn-lg  mt-5 w-75">Poster already submited</button>
+          {% else %}
+          <button type="button" class="btn btn-primary btn-lg  mt-5 w-75" data-bs-toggle="modal" data-bs-target="#Postersubmition">
+              Submit Poster
+            </button>
+          {% endif %}
+         
+          
+
+         
+          
+        </div>
+        {% endif %}
+
+
+
+
+        <div class="modal fade" id="registerasparticipant" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Register as participant</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Do you want to register as participant
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+               <a href="{% url 'register_as_participant' event.id %}"> <button type="button"  class="btn btn-primary"> Register</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+
+
+<div class="modal fade" id="Papersubmition" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Paper submition</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+<div class="myform ">
+  <h1 class="text-center">Paper submition</h1>
+  <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+          <label for="name">Paper Name</label>
+          <input name="papername" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+        </div>
+
+
+
+
+        <div class="form-group mt-3">
+          <label for="num">Abstract</label>
+          
+          <textarea name="abstract" id="" cols="30" rows="10" class="form-control"></textarea>
+        </div>
+
+
+        <div class="form-group mt-3">
+          <label for="photo">PaperFile</label>
+          <input name="paperfile" type="file" class="form-control" id="photo">
+        </div>
+      
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">submit paper</button>
+           
+          
+        </div>
+  </form>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+<div class="modal fade" id="Postersubmition" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Poster submition</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+<div class="myform ">
+  <h1 class="text-center">Poster submition</h1>
+  <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+          <label for="name">Poster Name</label>
+          <input name="postername" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+        </div>
+
+
+
+
+        <div class="form-group mt-3">
+          <label for="num">Abstract</label>
+          
+          <textarea name="posterabstract" id="" cols="30" rows="10" class="form-control"></textarea>
+        </div>
+
+
+        <div class="form-group mt-3">
+          <label for="photo">PosterFile</label>
+          <input name="posterfile" type="file" class="form-control" id="photo">
+        </div>
+      
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit Poster</button>
+        </div>
+  </form>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+  
+    <div class="col-md-8 " >
+      <div class=" border-0 " style=" height: 100%;">
+        <img src="{% static event.event_image.url %}" class="card-img-top" style="height:30rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{event.title}}</h5>
+          <p class="card-text"><span style="font-weight: bold;">TOPIC:&nbsp;</span>{{event.topic}}
+            
+
+
+          </p>
+          <p class="card-text"><span style="font-weight: bold;">DESCRIPTION:&nbsp;</span>{{event.description}}
+
+            
+           
+                </span> 
+
+
+          </p>
+          <p class="card-text"><span style="font-weight: bold;">TARGETTED AUDIANCE:&nbsp;</span>{{event.targetted_audience}}
+
+            
+           
+          </span> 
+
+
+    </p>
+          <div class="d-flex flex-row">
+            <div>
+
+                <ion-icon  name="calendar"></ion-icon>
+            </div>
+            <div><p>:{{event.from_date}}-{{event.to_date}}</p></div>
+          </div>
+          <div class="d-flex flex-row">
+            <div>
+
+                <ion-icon name="location"></ion-icon>
+            </div>
+            <div><p>:{{event.venue}}</p></div>
+          </div>
+
+          <div class="d-flex flex-row">
+            <div>
+
+                <ion-icon name="pricetags"></ion-icon>
+            </div>
+            <div><p>:{{event.registration_fees}}</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+ion-icon {
+font-size: 24px;
+}
+
+
+</style>
+
+
+
+
+
+
+
+
+
+{% endblock %}

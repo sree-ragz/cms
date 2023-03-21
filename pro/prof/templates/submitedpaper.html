@@ -1,0 +1,56 @@
+{% extends 'dashboardnav.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+<section>
+
+    <div class="container">
+        <div class="row">
+{% for paper in paper%}
+            <div class="col-md-4">
+                <div class=" mt-5" style="width: 18rem; border: 1px solid gray; border-radius: 5px;">
+                    <a href="">    <img src="{% static paper.event.event_image.url %}" class="card-img-top" alt="..." style="height: 15rem;">  </a>
+                      <div class="card-body">
+                        <p class="card-text text-center">{{paper.event.title}}</p>
+                        <p class="card-text"><span style="font-weight: bold;">PAPER NAME:&nbsp;</span>{{paper.papername}}
+          
+
+
+                        </p>
+                        <p class="card-text"><span style="font-weight: bold;">STATUS:&nbsp;</span>
+
+                            {% if paper.status == 'pending' %}
+                            <span class="bg-warning rounded">Pending</span>
+                            {% elif paper.status == 'accepted' %}
+
+                            <span class="bg-success rounded">Accepted</span>
+                            {% elif paper.status == 'declined' %}
+                            <span class="bg-danger rounded">Declined</span>
+                            {% endif %}
+          
+
+
+                        </p>
+
+                       <div class="text-center"><a href="{% url 'viewsubmitedpaper' paper.id %}" class="btn btn-primary ">view</a></div> 
+
+                        
+                        
+                        
+        
+        
+
+      
+                      </div>
+                    </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'dashboardnav.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+
+    <div>
+    <h1 class="text-center">PAPER DETAILS</h1>
+    <div class="container">
+      <div class="row">
+    <table class="table table-hover">
+        <thead>
+          <tr style="background-color:#585960; color:white ;">
+            <th scope="col">User Name</th>
+            <th scope="col">Paper Id</th>
+            <th scope="col">Event Name</th>
+            <th scope="col">Paper Name</th>
+            <th scope="col">Submit Count</th>
+            <th scope="col"  > From Date</th>
+            
+            <th scope="col"  > To Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+
+            {% for details in reviewerpaper %}
+          <tr>
+            <th scope="row">{{details.papername.userid}}</th>
+            <td>{{details.papername.pk}}</td>
+            <td>{{details.papername.event.title}}</td>
+            <td>{{details.papername.papername}}</td>
+            <td>{{details.papername.submit_count}}</td>
+            <td>{{details.papername.event.from_date}}</td>
+            <td>{{details.papername.event.to_date}}</td>
+            <td>
+                {% if details.papername.status == 'pending' %}
+                
+                <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+                {% elif details.papername.status == 'accepted' %}
+              <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+                {% elif details.papername.status == 'declined' %}
+              <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+            </td>
+            {% endif %}
+            <td><a href="{% url 'reviewerpaperpage' details.papername.pk %}">details</a></td>
+            
+            
+            
+          </tr>
+          {% endfor %}
+          
+          
+        </tbody>
+      </table>
+      </div>
+
+
+<div class="row mt-5">
+    <h1 class="text-center">POSTER DETAILS</h1>
+        <table class="table table-hover">
+            <thead>
+              <tr style="background-color:#585960; color:white ;">
+                <th scope="col">User Name</th>
+                <th scope="col">Poster Id</th>
+                <th scope="col">Event Name</th>
+                <th scope="col">Poster Name</th>
+                <th scope="col">Submit Count</th>
+                <th scope="col"  >From Date</th>
+                
+                <th scope="col" > To Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for details in reviewerposter %}
+                <tr>
+                  <th scope="row">{{details.postername.userid}}</th>
+                  <td>{{details.postername.pk}}</td>
+                  <td>{{details.postername.event.title}}</td>
+                  <td>{{details.postername.postername}}</td>
+                  <td>{{details.postername.submit_count}}</td>
+                  <td>{{details.postername.event.from_date}}</td>
+                  <td>{{details.postername.event.to_date}}</td>
+                  <td>
+                      {% if details.postername.status == 'pending' %}
+                      
+                      <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+                      {% elif details.postername.status == 'accepted' %}
+                    <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+                      {% elif details.postername.status == 'declined' %}
+                    <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+                  </td>
+                  {% endif %}
+                  <td><a href="{% url 'reviewerposterpage' details.postername.pk %}">details</a></td>
+                  
+                  
+                  
+                </tr>
+                {% endfor %}
+              
+              
+              
+            </tbody>
+          </table>
+          </div>
+    </div>
+    <style>
+        .table{
+          border-radius: 5px;
+          overflow: hidden;
+          border-color: black;
+    
+        }
+      </style>
+      </div>
+    {% endblock %}

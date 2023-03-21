@@ -1,0 +1,59 @@
+{% extends 'dashboardnav.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+
+<section>
+
+    <div class="container">
+        <div class="row">
+{% for event in event %}
+            <div class="col-md-4">
+                <div class="card mt-5" style="width: 18rem;">
+                    <a href="{% url 'eventregistration' event.id %}">    <img src="{% static event.event_id.event_image.url %}" class="card-img-top" alt="..." style="height: 15rem;">  </a>
+                      <div class="card-body">
+                        <p class="card-text text-center">{{event.event_id.title}}</p>
+                        <p class="card-text"><span style="font-weight: bold;">TOPIC:&nbsp;</span>{{event.event_id.topic}}
+          
+
+
+                        </p>
+                        
+                        
+        <div class="d-flex flex-row">
+          <div>
+
+              <ion-icon  name="calendar"></ion-icon>
+          </div>
+          <div><p>:{{event.event_id.from_date}}-{{event.event_id.to_date}}</p></div>
+        </div>
+        <div class="d-flex flex-row">
+          <div>
+
+              <ion-icon name="location"></ion-icon>
+          </div>
+          <div><p>:{{event.event_id.venue}}</p></div>
+        </div>
+
+        <div class="d-flex flex-row">
+          <div>
+
+              <ion-icon name="pricetags"></ion-icon>
+          </div>
+          <div><p>:{{event.event_id.registration_fees}}</p></div>
+        </div>
+                      </div>
+                    </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+
+
+{% endblock %}

@@ -3,3 +3,9 @@ from .models import *
 # Register your models here.
 admin.site.register(Participant)
 admin.site.register(PaperSubmition)
+admin.site.register(Privillage)
+admin.site.register(PosterSubmition)
+admin.site.register(Event)
+admin.site.register(User_Event)
+admin.site.register(Reviewer_Paper)
+admin.site.register(Reviewer_Poster)

@@ -1,102 +1,106 @@
-
-{% extends 'main.html' %}
+{% extends 'dashboardnav.html' %}
 {% block content %}
+{% load static %}
 
 <form action="" method="post" enctype="multipart/form-data">
 
 
     {% csrf_token %}
-    
-   
-<div class="container rounded bg-white mt-5 mb-5">
-    <div class="row">
-        <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" height="150px" src="{{participant_obj.photo.url}}"></div>
-        </div>
-        <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile Settings</h4>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Name</label><input name="name" type="text" class="form-control" placeholder="first name" value="{{participant_obj.name}}"></div>
-                    
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Mobile Number</label><input name="ph_no"  type="text" class="form-control" placeholder="enter phone number" value="{{participant_obj.ph_no}}"></div>
-                    <div class="col-md-12"><label class="labels">Designation</label><input name="designation" type="text" class="form-control" placeholder="Designation" value="{{participant_obj.designation}}"></div>
-                    <div class="col-md-12"><label class="labels">Organisation</label><input name="organization" type="text" class="form-control" placeholder="Organisation" value="{{participant_obj.organization}}"></div>
-                    
-                    <div class="col-md-12"><label id="photo" class="labels">Photo</label> {{form.photo}}</div>
-                    
-                    <!-- <input value="" placeholder="{{participant_obj.photo.url}}" name="photo" type="file"  class="custom px-1 form-control" > -->
-                    <div class="col-md-12"><label class="labels">Email ID</label><input name="email" type="text" class="form-control" placeholder="enter email id" value="{{participant_obj.email}}"></div>
-                    
-                </div>
-                
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+
+
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
+                        width="150px" height="150px" src="{{participant_obj.photo.url}}"></div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span>paper details</span></div><br>
-                <div class="col-md-12"><label class="labels">papername</label><input name="papername" type="text" class="form-control" placeholder="experience" value="{{papersubmition_obj.papername}}"></div> <br>
-                <div class="col-md-12"><label class="labels">abstract</label><input name="abstract" type="text" class="form-control" placeholder="additional details" value="{{papersubmition_obj.abstract}}"></div> <br>
-                <div class="col-md-12"><label class="labels">paperfile</label>{{form2.paperfile}}</div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Settings</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">Name</label><input name="name" type="text"
+                                class="form-control" placeholder="first name" value="{{participant_obj.name}}"></div>
+
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Mobile Number</label><input name="ph_no"
+                                type="text" class="form-control" placeholder="enter phone number"
+                                value="{{participant_obj.ph_no}}"></div>
+                        <div class="col-md-12"><label class="labels">Designation</label><input name="designation"
+                                type="text" class="form-control" placeholder="Designation"
+                                value="{{participant_obj.designation}}"></div>
+                        <div class="col-md-12"><label class="labels">Organisation</label><input name="organization"
+                                type="text" class="form-control" placeholder="Organisation"
+                                value="{{participant_obj.organization}}"></div>
+
+                        <div class="col-md-12"><label id="photo" class="labels">Photo</label> {{form.photo}}</div>
+
+                        <!-- <input value="" placeholder="{{participant_obj.photo.url}}" name="photo" type="file"  class="custom px-1 form-control" > -->
+                        <div class="col-md-12"><label class="labels">Email ID</label><input name="email" type="text"
+                                class="form-control" placeholder="enter email id" value="{{participant_obj.email}}">
+                        </div>
+
+                    </div>
+
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save
+                            Profile</button></div>
+                </div>
             </div>
+           
+           
         </div>
     </div>
-</div>
-</div>
-</div>
+    </div>
+    </div>
 </form>
 
 <style>
+    body {
+        background:  #3651d4
+    }
 
-body {
-    background: rgb(99, 39, 120)
-}
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #BA68C8
+    }
 
-.form-control:focus {
-    box-shadow: none;
-    border-color: #BA68C8
-}
+    .profile-button {
+        background: rgb(99, 39, 120);
+        box-shadow: none;
+        border: none
+    }
 
-.profile-button {
-    background: rgb(99, 39, 120);
-    box-shadow: none;
-    border: none
-}
+    .profile-button:hover {
+        background: #682773
+    }
 
-.profile-button:hover {
-    background: #682773
-}
+    .profile-button:focus {
+        background: #682773;
+        box-shadow: none
+    }
 
-.profile-button:focus {
-    background: #682773;
-    box-shadow: none
-}
+    .profile-button:active {
+        background: #682773;
+        box-shadow: none
+    }
 
-.profile-button:active {
-    background: #682773;
-    box-shadow: none
-}
+    .back:hover {
+        color: #682773;
+        cursor: pointer
+    }
 
-.back:hover {
-    color: #682773;
-    cursor: pointer
-}
+    .labels {
+        font-size: 11px
+    }
 
-.labels {
-    font-size: 11px
-}
-
-.add-experience:hover {
-    background: #BA68C8;
-    color: #fff;
-    cursor: pointer;
-    border: solid 1px #BA68C8
-}
+    .add-experience:hover {
+        background: #BA68C8;
+        color: #fff;
+        cursor: pointer;
+        border: solid 1px #BA68C8
+    }
 </style>
 
 {% endblock %}

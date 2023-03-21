@@ -1,0 +1,153 @@
+{% extends 'dashboardnav.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+<section>
+  
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class=" border-0" style="width: fit-content; height: 100%;">
+                    <img src="{% static paper.event.event_image.url %}" class="card-img-top" style="height:30rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">{{paper.event.title}}</h5>
+                      <p class="card-text"><span style="font-weight: bold;">TOPIC:&nbsp;</span>{{paper.event.topic}}
+                        
+
+
+                      </p>
+                      <p class="card-text"><span style="font-weight: bold;">DESCRIPTION:&nbsp;</span>{{paper.event.description}}
+
+                        
+                       
+                            </span> 
+
+
+                      </p>
+                      <div class="d-flex flex-row">
+                        <div>
+
+                            <ion-icon  name="calendar"></ion-icon>
+                        </div>
+                        <div><p>:{{paper.event.from_date}}-{{paper.event.to_date}}</p></div>
+                      </div>
+                      <div class="d-flex flex-row">
+                        <div>
+
+                            <ion-icon name="location"></ion-icon>
+                        </div>
+                        <div><p>:{{paper.event.venue}}</p></div>
+                      </div>
+
+                      <div class="d-flex flex-row">
+                        <div>
+
+                            <ion-icon name="pricetags"></ion-icon>
+                        </div>
+                        <div><p>:{{paper.event.registration_fees}}</p></div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+
+            <div class="col-md-6">
+
+              <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center experience">
+                </div><br>
+                <div class="col-md-12"><label class="labels">papername</label><input readonly name="papername" type="text"
+                        class="form-control" placeholder="experience" value="{{paper.papername}}">
+                </div> <br>
+                <div class="col-md-12"><label class="labels">abstract</label>
+                  <textarea readonly class="form-control" name="abstract" id="" cols="30" rows="5">{{paper.abstract}}</textarea>
+                  </div> <br>
+                <div class="col-md-12"><label class="labels">paperfile</label>
+                    
+                    <embed type="application/pdf"
+                        src="{% static paper.paperfile.url %}"
+                        width="100%" height="100%"/>
+
+                        <div class="text-center"><a class="btn btn-primary" href="{{paper.paperfile.url}}">view</a></div>
+
+
+                </div>
+
+                <div class="col-md-12"><label class="labels">Remark</label>
+                  <textarea readonly class="form-control" name="remark" id="" cols="30" rows="5">{{paper.remark}}</textarea>
+                  </div> <br>
+                  {% if paper.remark != None and paper.status == 'pending' %}
+                   <div class="text-center"><button type="button" class="btn btn-primary   mt-5" data-bs-toggle="modal" data-bs-target="#Papersubmition">
+                    Re upload
+                  </button></div>
+                  {% endif %}
+            </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="modal fade" id="Papersubmition" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Paper submition</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          <div class="myform ">
+            <h1 class="text-center">Paper submition</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Paper Name</label>
+                    <input value="{{paper.papername}}" name="papername" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+                  </div>
+          
+          
+          
+          
+                  <div class="form-group mt-3">
+                    <label for="num">Abstract</label>
+                    
+                    <textarea name="abstract" id="" cols="30" rows="10" class="form-control">{{paper.abstract}}</textarea>
+                  </div>
+          
+          
+                  <div class="form-group mt-3">
+                    <label for="photo">PaperFile</label>
+                    <input name="paperfile" type="file" class="form-control" id="photo">
+                  </div>
+                
+          
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">submit paper</button>
+                     
+                    
+                  </div>
+            </form>
+          </div>
+          </div>
+          
+          </div>
+          </div>
+          </div>
+
+
+
+
+    </div>
+ 
+</section>
+
+
+
+{% endblock %}

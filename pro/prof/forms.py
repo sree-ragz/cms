@@ -12,7 +12,7 @@ class CreateUserForm(UserCreationForm):
 class Registration2Form(ModelForm):
     class Meta:
         model=Participant
-        fields=['name','email','designation','organization','photo','ph_no','is_author']
+        fields=['name','email','designation','organization','photo','ph_no']
 
 
 
@@ -27,7 +27,40 @@ class PaperSubmitionForm(ModelForm):
         model=PaperSubmition
         fields=['papername','abstract','paperfile']
 
+class PosterSubmitionForm(ModelForm):
+    class Meta:
+        model=PosterSubmition
+        fields=['postername','posterabstract','posterfile']
+
 class EditPaperSubmitionForm(ModelForm):
     class Meta:
         model=PaperSubmition
         fields=['papername','abstract','paperfile']
+
+class EditPosterSubmitionForm(ModelForm):
+    class Meta:
+        model=PosterSubmition
+        fields=['postername','posterabstract','posterfile']
+
+class EditPosterSubmitionFormReviewer(ModelForm):
+    class Meta:
+        model=PosterSubmition
+        fields=['status','posterremark']
+
+class EditPaperrSubmitionFormReviewer(ModelForm):
+    class Meta:
+        model=PaperSubmition
+        fields=['status','remark']
+
+
+
+class PaperReviewForm(ModelForm):
+    class Meta:
+        model=PaperSubmition
+        fields=['paperfile','remark']
+
+
+class PosterReviewForm(ModelForm):
+    class Meta:
+        model=PosterSubmition
+        fields=['posterfile','posterremark']
