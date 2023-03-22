@@ -22,4 +22,5 @@ urlpatterns = [
     path('',include('prof.urls')),
 ]
 
+admin.site.index_title="CMS"
 urlpatterns+= static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
