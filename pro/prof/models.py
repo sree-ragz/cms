@@ -2,7 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 
+from multiselectfield import MultiSelectField
+
 # Create your models here.
+class ParticipantType(models.Model):
+    type=models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.type
+    
+
+
 class Participant(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     name=models.CharField(max_length=200,null=True)
@@ -11,6 +21,9 @@ class Participant(models.Model):
     organization=models.CharField(max_length=200)
     photo=models.ImageField(upload_to='images')
     ph_no=models.CharField(max_length=12)
+    gender=models.CharField(max_length=10,null=False)
+    participant_type=models.ForeignKey(ParticipantType,on_delete=models.CASCADE)
+
     created_on=models.DateTimeField(auto_now_add=True)
     created_by=models.CharField(default=name,max_length=100 ,editable=False)
     modified_on=models.DateTimeField(auto_now_add=True)
@@ -20,12 +33,14 @@ class Participant(models.Model):
 
     def __str__(self):
         return self.name
+
+
 class Event(models.Model):
     title=models.CharField(max_length=200)
     description=models.TextField(max_length=500)
     from_date=models.DateField()
     to_date=models.DateField()
-    targetted_audience=models.CharField(max_length=200)
+    targetted_audience=models.ManyToManyField(ParticipantType)
     event_image=models.ImageField(upload_to='eventimages/')
     topic=models.TextField(max_length=500)
     venue=models.TextField(max_length=200)
@@ -80,8 +95,8 @@ class User_Event(models.Model):
     
 class Reviewer_Paper(models.Model):
     userid=models.ForeignKey(User,on_delete=models.CASCADE)
-    papername=models.ForeignKey(PaperSubmition,on_delete=models.CASCADE)
+    papername=models.ForeignKey(PaperSubmition,on_delete=models.CASCADE,unique=True)
 
 class Reviewer_Poster(models.Model):
     userid=models.ForeignKey(User,on_delete=models.CASCADE)
-    postername=models.ForeignKey(PosterSubmition,on_delete=models.CASCADE)
+    postername=models.ForeignKey(PosterSubmition,on_delete=models.CASCADE,unique=True)

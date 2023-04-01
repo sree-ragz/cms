@@ -17,7 +17,7 @@
             <th scope="col">Paper Id</th>
             <th scope="col">Event Name</th>
             <th scope="col">Paper Name</th>
-            <th scope="col">Submit Count</th>
+            <th scope="col">Resubmition Status</th>
             <th scope="col"  > From Date</th>
             
             <th scope="col"  > To Date</th>
@@ -33,7 +33,7 @@
             <td>{{details.papername.pk}}</td>
             <td>{{details.papername.event.title}}</td>
             <td>{{details.papername.papername}}</td>
-            <td>{{details.papername.submit_count}}</td>
+            <td>{% if details.papername.submit_count == 1 %}Resubmitted{% else %}Reviewed/pending{% endif %}</td>
             <td>{{details.papername.event.from_date}}</td>
             <td>{{details.papername.event.to_date}}</td>
             <td>
@@ -68,7 +68,7 @@
                 <th scope="col">Poster Id</th>
                 <th scope="col">Event Name</th>
                 <th scope="col">Poster Name</th>
-                <th scope="col">Submit Count</th>
+                <th scope="col">Resubmition Status</th>
                 <th scope="col"  >From Date</th>
                 
                 <th scope="col" > To Date</th>
@@ -83,7 +83,7 @@
                   <td>{{details.postername.pk}}</td>
                   <td>{{details.postername.event.title}}</td>
                   <td>{{details.postername.postername}}</td>
-                  <td>{{details.postername.submit_count}}</td>
+                  <td>{% if details.postername.submit_count == 1 %}Resubmitted{% else %}Reviewed/pending{% endif %}</td>
                   <td>{{details.postername.event.from_date}}</td>
                   <td>{{details.postername.event.to_date}}</td>
                   <td>

@@ -230,7 +230,7 @@ nav:hover .shrink-btn,
   padding: 0 0.8rem;
   color: var(--text-color);
   letter-spacing: 0.5px;
-  height: 45px;
+  /* height: 45px; */
   line-height: 45px;
   transition: opacity 0.3s 0.2s, height 0.5s 0s;
 }

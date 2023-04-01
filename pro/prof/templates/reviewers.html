@@ -1,0 +1,158 @@
+{% extends 'dashboardnav.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+
+
+
+<div>
+    <div style="display: flex; align-items:end ;flex-direction: column;" class="">
+      <a href="" class="btn btn-primary"   data-bs-toggle="modal" data-bs-target="#addreviewer"><ion-icon style="color: rgb(255, 255, 255);font-size: 22px;  float: left;" name="add-circle-outline">&#xE147;</ion-icon><span>Add Reviewer</span> </a>
+    </div>
+<div class=""></div>
+    <table class="table table-hover mt-5">
+        <thead>
+          <tr style="background-color:#585960; color:white ;">
+            <th scope="col">Reviewer Name</th>
+            <th scope="col"> Email id</th>
+            
+            <th scope="col"  >Actions</th>
+            
+            
+
+          </tr>
+        </thead>
+        <tbody>
+
+            {% for i in pre %}
+          <tr>
+            <th scope="row">{{i.userid.username}} </th>
+            
+            
+            <td>{{i.userid.email}}</td>
+            
+           
+            
+            
+            
+            <td> <a href="" data-bs-toggle="modal" data-bs-target="#deleteevent{{i.userid.username}}" ><span data-bs-toggle="tooltip" data-bs-placement="top" title="delete"><ion-icon style="font-size: 22px; color: red; pointer-events: none;" name="trash"></ion-icon></span></a>
+
+
+              <div class="modal fade" id="deleteevent{{i.userid.username}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Delete Event</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                     are you sure ? want to delete <span style="color: red;">{{i.userid.username}}</span>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <a href="{% url 'admin_delete_reviewer' i.userid.username  %}" class="btn btn-danger">Delete</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            
+            
+            
+            
+            
+          </tr>
+
+
+         
+
+
+
+          {% endfor %}
+          
+          
+        </tbody>
+      </table>
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
+      <div class="modal fade" id="addreviewer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Reviewer </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <div class="myform ">
+          <h1 class="text-center">Add Reviewer</h1>
+          <form action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="name">Username</label>
+                <input name="username" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+              </div>
+              
+    
+            <div class="form-group mt-3">
+              <label for="exampleInputEmail1">Email address</label>
+              <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
+            </div>
+    
+            <div class="form-group mt-3">
+              <label for="exampleInputPassword1">Password</label>
+              <input name="password1" type="password" class="form-control" id="exampleInputPassword1" >
+            </div>
+            
+            <div class="form-group mt-3">
+                <label for="exampleInputPassword1">Confirm Password</label>
+                <input name="password2" type="password" class="form-control" id="exampleInputPassword1" >
+              </div>
+        
+        
+                
+              
+        
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Add</button>
+                   
+                  
+                </div>
+          </form>
+  </div>
+  <script>
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+  </script>
+      <style>
+        .table{
+          border-radius: 5px;
+          overflow: hidden;
+          border-color: black;
+    
+        }
+      </style>
+</div>
+
+
+
+
+{% endblock %}

@@ -83,10 +83,10 @@
             
             
           </div>
-          <a class="carousel-control-prev bg-transparent w-aut" href="#recipeCarousel" role="button" data-bs-slide="prev">
+          <a class="carousel-control-prev bg-transparent w-aut shrink-btn" href="#recipeCarousel" role="button" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           </a>
-          <a class="carousel-control-next bg-transparent w-aut" href="#recipeCarousel" role="button" data-bs-slide="next">
+          <a class="carousel-control-next bg-transparent w-aut shrink-btn" href="#recipeCarousel" role="button" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
           </a>
         </div>
@@ -101,52 +101,99 @@
       
       <div class="row text-center">
         <!--ADD CLASSES HERE d-flex align-items-stretch-->
+        <h4>Current Events</h4>
         {% for event in events %}
-       
+        {% if event.to_date > today %}
+        <div>
+        <div class="col-md-4 ">
+          <a href="{% url 'eventregistration' event.id %}">
 
-            <div class="col-md-4 ">
-                <a href="{% url 'eventregistration' event.id %}">
-
-                  <div class="card mt-5" style="width: 18rem;">
-                    <a href="{% url 'eventregistration' event.id %}">    <img src="{% static event.event_image.url %}" class="card-img-top" alt="..." style="height: 15rem;">  </a>
-                      <div class="card-body">
-                        <p class="card-text text-center">{{event.title}}</p>
-                        <p class="card-text"><span style="font-weight: bold;">TOPIC:&nbsp;</span>{{event.topic}}
-          
+            <div class="card mt-5" style="width: 18rem;">
+                  <img src="{% static event.event_image.url %}" class="card-img-top" alt="..." style="height: 15rem;"> 
+                <div class="card-body">
+                  <p class="card-text text-center">{{event.title}}</p>
+                  <p class="card-text"><span style="font-weight: bold;">TOPIC:&nbsp;</span>{{event.topic}}
+    
 
 
-                        </p>
-                        
-                        
-        <div class="d-flex flex-row">
-          <div>
+                  </p>
+                  
+                  
+  <div class="d-flex flex-row">
+    <div>
 
-              <ion-icon  name="calendar"></ion-icon>
-          </div>
-          <div><p>:{{event.from_date}}-{{event.to_date}}</p></div>
-        </div>
-        <div class="d-flex flex-row">
-          <div>
+        <ion-icon  name="calendar"></ion-icon>
+    </div>
+    <div><p>:{{event.from_date}}-{{event.to_date}}</p></div>
+  </div>
+  <div class="d-flex flex-row">
+    <div>
 
-              <ion-icon name="location"></ion-icon>
-          </div>
-          <div><p>:{{event.venue}}</p></div>
-        </div>
+        <ion-icon name="location"></ion-icon>
+    </div>
+    <div><p>:{{event.venue}}</p></div>
+  </div>
 
-        <div class="d-flex flex-row">
-          <div>
+  <div class="d-flex flex-row">
+    <div>
 
-              <ion-icon name="pricetags"></ion-icon>
-          </div>
-          <div><p>:{{event.registration_fees}}</p></div>
-        </div>
-                      </div>
-                    </div>
-                </a>
-               
+        <ion-icon name="pricetags"></ion-icon>
+    </div>
+    <div><p>:{{event.registration_fees}}</p></div>
+  </div>
+                </div>
               </div>
-        
-      
+          </a>
+         
+        </div>
+      </div>
+        {% endif %}
+        {% endfor %}
+        <h4>Past Events</h4>
+        {% for event in events %}
+        {% if event.to_date < today %}
+        <div>
+        <div class="col-md-4 ">
+
+            <div class="card mt-5" style="width: 18rem;">
+                  <img src="{% static event.event_image.url %}" class="card-img-top" alt="..." style="height: 15rem;"> 
+                <div class="card-body">
+                  <p class="card-text text-center">{{event.title}}</p>
+                  <p class="card-text"><span style="font-weight: bold;">TOPIC:&nbsp;</span>{{event.topic}}
+    
+
+
+                  </p>
+                  
+                  
+  <div class="d-flex flex-row">
+    <div>
+
+        <ion-icon  name="calendar"></ion-icon>
+    </div>
+    <div><p>:{{event.from_date}}-{{event.to_date}}</p></div>
+  </div>
+  <div class="d-flex flex-row">
+    <div>
+
+        <ion-icon name="location"></ion-icon>
+    </div>
+    <div><p>:{{event.venue}}</p></div>
+  </div>
+
+  <div class="d-flex flex-row">
+    <div>
+
+        <ion-icon name="pricetags"></ion-icon>
+    </div>
+    <div><p>:{{event.registration_fees}}</p></div>
+  </div>
+                </div>
+              </div>
+         
+        </div>
+      </div>
+        {% endif %}
         {% endfor %}
       </div>
     </div>

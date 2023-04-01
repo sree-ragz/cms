@@ -209,7 +209,7 @@ Register as participant
 
 
           </p>
-          <p class="card-text"><span style="font-weight: bold;">TARGETTED AUDIANCE:&nbsp;</span>{{event.targetted_audience}}
+          <p class="card-text"><span style="font-weight: bold;">TARGETTED AUDIANCE:&nbsp;</span>{% for ta in event.targetted_audience.all %}{{ ta }}<br>{% endfor %}
 
             
            

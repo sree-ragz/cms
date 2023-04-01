@@ -33,11 +33,40 @@
           <label for="desi">Designation</label>
           <input name="designation" type="text" class="form-control" id="desi"  >
       </div>
+      <div class="form-group mt-3">
+        <label for="desi">Gender</label>
+        <div class="form-check">
+         
+          <input class="form-check-input" value="male" type="radio" name="gender" id="flexRadioDefault1">
+          <label class="form-check-label" for="flexRadioDefault1">
+            Male
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" value="female"  type="radio" name="gender" id="flexRadioDefault2" >
+          <label class="form-check-label" for="flexRadioDefault2">
+           Female
+          </label>
+        </div>
+
+        <div class="form-check">
+         
+          <input class="form-check-input" value="others" type="radio" name="gender" id="flexRadioDefault1">
+          <label class="form-check-label" for="flexRadioDefault1">
+            Others
+          </label>
+        </div>
+      </div>
 
       <div class="form-group mt-3">
           <label for="org">Organization</label>
           <input name="organization" type="text" class="form-control" id="org" >
       </div>
+      <label for="org">Participant type</label>
+      <div class="form-group mt-3">
+        
+        <div class="text-center">{{form2.participant_type}}</div> 
+    </div>
 
       <div class="form-group mt-3">
           <label for="photo">Photo</label>

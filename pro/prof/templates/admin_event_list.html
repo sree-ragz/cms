@@ -1,0 +1,417 @@
+{% extends 'dashboardnav.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+
+
+<div>
+    <div style="display: flex; align-items:end ;flex-direction: column;" class="">
+      <a href="" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#addevent"><ion-icon style="color: rgb(255, 255, 255);font-size: 22px;  float: left;" name="add-circle-outline">&#xE147;</ion-icon><span>Add Events</span> </a>
+    </div>
+<div class=""></div>
+    <table class="table table-hover mt-5">
+        <thead>
+          <tr style="background-color:#585960; color:white ;">
+            <th scope="col">Title</th>
+            <th scope="col"> Topic</th>
+            <th scope="col">From Date</th>
+            <th scope="col">To Date</th>
+            <th scope="col">Targetted Audience</th>
+           
+            
+            <th scope="col"  >Venue</th>
+            <th scope="col">Registration Fees</th>
+            <th scope="col">Paper</th>
+            <th scope="col">Poster</th>
+            <th scope="col">Image</th>
+            <th scope="col" colspan="3" >Actions</th>
+            
+            
+
+          </tr>
+        </thead>
+        <tbody>
+
+            {% for event in event %}
+          <tr>
+            
+            <th scope="row">{{event.title}} </th>
+            <td>{{event.topic}}</td>
+            <td>{{event.from_date}}</td>
+            <td>{{event.to_date}}</td>
+            <td>{% for ta in event.targetted_audience.all %}{{ ta }}<br/>{% endfor %}</td>
+            <td>{{event.venue}}</td>
+            <td>{{event.registration_fees}}</td>
+            <td>{{event.paper_submited}}</td>
+            <td>{{event.poster_submited}}</td>
+            <td>
+               <a href="{{event.event_image.url}}"><img style="width: 50px;" src="{{event.event_image.url}}" alt=""></a> 
+            </td>
+            <td >
+              
+                       
+              <a style="cursor: pointer;" class="" data-bs-toggle="modal" data-bs-target="#editevent{{event.id}}"> <span data-bs-toggle="tooltip" data-bs-placement="top" title="edit"><ion-icon   style="font-size: 22px; color: orange;pointer-events: none;" name="pencil"></ion-icon> </span></a>
+
+               <div class="modal fade" id="editevent{{event.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Event</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <div class="myform ">
+                  <h1 class="text-center">Edit Event</h1>
+                  <form action="/admin_edit_event/{{event.id}}" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="form-group">
+                          <label for="name">Event Name</label>
+                          <input name="title" value="{{event.title}}" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+                        </div>
+                
+                
+                
+                
+                        <div class="form-group mt-3">
+                          <label for="num">Description</label>
+                          
+                          <textarea name="description" id="" cols="30" rows="7" class="form-control">{{event.description}}</textarea>
+                        </div>
+                
+                        
+                        <div class="form-group mt-3">
+                          <label for="photo">FromDate</label>
+                          
+                          <input  type="date" name="from_date" id="" value="{{ event.from_date|date:'Y-m-d'}}">
+                          
+                          <label for="photo">ToDate</label> 
+                          <input  type="date" name="to_date" id="" value="{{ event.to_date|date:'Y-m-d'}}">
+                         
+                          
+                        </div>
+                      
+              
+                        <label for="photo">Targetted Audience:</label>
+                        <div class="form-group mt-3 text-center">
+                         
+                          {{form.targetted_audience}}
+                          <!-- <select  multiple="multiple">
+                            {% for pt in pt %}
+                            
+                            <option value="">{% for ta in event.targetted_audience.all %}{{ta|slice:"1"}} {% endfor %}</option>
+                           
+                             <option name="" id="" >{{pt}}</option>
+                             
+                            {% endfor %}
+                          </select> -->
+                         
+              
+                        </div>
+                        <p><span style="color: red;">*</span> Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>
+                        <div class="form-group mt-3">
+                          <label for="photo">Topic</label>
+                          <input value="{{event.topic}}" name="topic" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+                          
+                        </div>
+                        <div class="form-group mt-3">
+                          <label for="photo">Venue</label>
+                          <input value="{{event.venue}}" name="venue" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+                          
+                        </div>
+                        <div class="form-group mt-3">
+                          <label for="photo">Registration Fees</label>
+                          <input value="{{event.registration_fees}}" name="registration_fees" type="number" class="form-control" id="name" aria-describedby="emailHelp">
+                          
+                        </div>
+                        <div class="form-group mt-3">
+                          <a href="{% static event.event_image.url %}">Current image</a><br>
+                          <label for="photo">Event Image</label>
+                      
+                          <input  name="event_image" type="file" class="form-control" id="name" aria-describedby="emailHelp" value="">
+                        </div>
+                        <div class="form-group mt-3">
+                          <input name="paper_submited" value="True" type="checkbox" {% if event.paper_submited %}checked{% endif %}>
+                          <label for="photo">Papersubmition</label>
+                          
+                          
+                        </div>
+                        <div class="form-group mt-3">
+                          <input name="poster_submited" value="True" type="checkbox" {% if event.poster_submited %}checked{% endif %}>
+                          <label for="photo">Postersubmition</label>
+                          
+                          
+                        </div>
+                        
+                      
+                
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-info">Save changes</button>
+                           
+                          
+                        </div>
+                  </form>
+                </div>
+                </div>
+                
+                </div>
+                </div>
+                </div>
+            
+               
+            </td>
+            <td> <a href="" data-bs-toggle="modal" data-bs-target="#deleteevent{{event.id}}" ><span data-bs-toggle="tooltip" data-bs-placement="top" title="delete"><ion-icon style="font-size: 22px; color: red; pointer-events: none;" name="trash"></ion-icon></span></a>
+
+
+              <div class="modal fade" id="deleteevent{{event.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Delete Event</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      do you want to delete <span style="color: red;">{{event.title}}</span>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <a href="{% url 'admin_delete_event' event.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            
+            <td><a href="" data-bs-toggle="modal" data-bs-target="#viewevent{{event.id}}" ><span data-bs-toggle="tooltip" data-bs-placement="top" title="view"><ion-icon style="font-size: 22px;color: green; pointer-events: none;" name="eye"></ion-icon></span></a>
+              <div class="modal fade" id="viewevent{{event.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel"> Event</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class=" " >
+                        <div class="  " >
+                          <img src="{% static event.event_image.url %}" class="card-img-top" style="height:30rem;">
+                          <div class="card-body">
+                            <h5 class="card-title">{{event.title}}</h5>
+                            <p class="card-text"><span style="font-weight: bold;">TOPIC:&nbsp;</span>{{event.topic}}
+                              
+                  
+                  
+                            </p>
+                            <p class="card-text"><span style="font-weight: bold;">DESCRIPTION:&nbsp;</span>{{event.description}}
+                  
+                              
+                             
+                                  </span> 
+                  
+                  
+                            </p>
+                            <p class="card-text"><span style="font-weight: bold;">TARGETTED AUDIANCE:&nbsp;</span>{{event.targetted_audience}}
+                  
+                              
+                             
+                            </span> 
+                  
+                  
+                      </p>
+                      <p class="card-text"><span style="font-weight: bold;">PAPER:&nbsp;</span>{{event.paper_submited}}
+                  
+                              
+                             
+                      </span> 
+            
+            
+                </p>
+                <p class="card-text"><span style="font-weight: bold;">POSTER:&nbsp;</span>{{event.poster_submited}}
+                  
+                              
+                             
+                </span> 
+      
+      
+          </p>
+                            <div class="d-flex flex-row">
+                              <div>
+                  
+                                  <ion-icon  name="calendar"></ion-icon>
+                              </div>
+                              <div><p>:{{event.from_date}}-{{event.to_date}}</p></div>
+                            </div>
+                            <div class="d-flex flex-row">
+                              <div>
+                  
+                                  <ion-icon name="location"></ion-icon>
+                              </div>
+                              <div><p>:{{event.venue}}</p></div>
+                            </div>
+                  
+                            <div class="d-flex flex-row">
+                              <div>
+                  
+                                  <ion-icon name="pricetags"></ion-icon>
+                              </div>
+                              <div><p>:{{event.registration_fees}}</p></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  
+                    </div>
+                  </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            
+            
+            </td>
+            
+            
+            
+          </tr>
+
+
+         
+
+
+
+          {% endfor %}
+          
+          
+        </tbody>
+      </table>
+
+
+
+
+
+
+      
+
+
+
+
+
+
+<div class="modal fade" id="addevent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+  <div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Add Event</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+  <div class="myform ">
+    <h1 class="text-center">Add Event</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Event Name</label>
+            <input name="title" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+          </div>
+  
+  
+  
+  
+          <div class="form-group mt-3">
+            <label for="num">Description</label>
+            
+            <textarea name="description" id="" cols="30" rows="2" class="form-control"></textarea>
+          </div>
+  
+  
+          <div class="form-group mt-3">
+            <label for="photo">FromDate</label>
+            <input name="from_date" type="date">
+            <label for="photo">ToDate</label> 
+            <input name="to_date" type="date">
+           
+            
+          </div>
+        
+    <label for="photo">Targetted Audience:</label>
+          <div class="form-group mt-3 text-center">
+            
+            {{form.targetted_audience}}
+            
+           
+
+          </div>
+          <p><span style="color: red;">*</span> Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>
+          <div class="form-group mt-3">
+            <label for="photo">Topic</label>
+            <input name="topic" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+            
+          </div>
+          <div class="form-group mt-3">
+            <label for="photo">Venue</label>
+            <input name="venue" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+            
+          </div>
+          <div class="form-group mt-3">
+            <label for="photo">Registration Fees</label>
+            <input name="registration_fees" type="number" class="form-control" id="name" aria-describedby="emailHelp">
+            
+          </div>
+          <div class="form-group mt-3">
+            <label for="photo">Event Image</label>
+            <input name="event_image" type="file" class="form-control" id="name" aria-describedby="emailHelp">
+            
+          </div>
+          <div class="form-group mt-3">
+            <input name="paper_submited" value="True" type="checkbox">
+            <label for="photo">Papersubmition</label>
+            
+            
+          </div>
+          <div class="form-group mt-3">
+            {{form.poster_submited}}
+            <label for="photo">Postersubmition</label>
+            
+            
+          </div>
+          
+        
+  
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add</button>
+             
+            
+          </div>
+    </form>
+  </div>
+  </div>
+  
+  </div>
+  </div>
+  </div>
+  <script>
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+  </script>
+      <style>
+        .table{
+          border-radius: 5px;
+          overflow: hidden;
+          border-color: black;
+    
+        }
+      </style>
+</div>
+
+
+
+
+
+{% endblock %}
