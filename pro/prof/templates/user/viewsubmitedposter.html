@@ -1,0 +1,150 @@
+{% extends 'navbar/dashboardnav.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+<section>
+  
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class=" border-0" style="width: fit-content; height: 100%;">
+                    <img src="{% static poster.event.event_image.url %}" class="card-img-top" style="height:30rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">{{poster.event.title}}</h5>
+                      <p class="card-text"><span style="font-weight: bold;">TOPIC:&nbsp;</span>{{paper.event.topic}}
+                        
+
+
+                      </p>
+                      <p class="card-text"><span style="font-weight: bold;">DESCRIPTION:&nbsp;</span>{{poster.event.description}}
+
+                        
+                       
+                            </span> 
+
+
+                      </p>
+                      <div class="d-flex flex-row">
+                        <div>
+
+                            <ion-icon  name="calendar"></ion-icon>
+                        </div>
+                        <div><p>:{{poster.event.from_date}}-{{poster.event.to_date}}</p></div>
+                      </div>
+                      <div class="d-flex flex-row">
+                        <div>
+
+                            <ion-icon name="location"></ion-icon>
+                        </div>
+                        <div><p>:{{poster.event.venue}}</p></div>
+                      </div>
+
+                      <div class="d-flex flex-row">
+                        <div>
+
+                            <ion-icon name="pricetags"></ion-icon>
+                        </div>
+                        <div><p>:{{poster.event.registration_fees}}</p></div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+
+            <div class="col-md-6">
+
+              <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center experience">
+                </div><br>
+                <div class="col-md-12"><label class="labels">postername</label><input readonly name="postername" type="text"
+                        class="form-control" placeholder="experience" value="{{poster.postername}}">
+                </div> <br>
+                <div class="col-md-12"><label class="labels">abstract</label>
+                  <textarea readonly class="form-control" name="abstract" id="" cols="30" rows="5">{{poster.posterabstract}}</textarea>
+                  </div> <br>
+                <div class="col-md-12"><label class="labels">posterfile</label>
+                    
+                    <embed type="application/pdf"
+                        src="{% static poster.posterfile.url %}"
+                        width="100%" height="100%"/>
+
+                        <div class="text-center"><a class="btn btn-primary" href="{{poster.posterfile.url}}">view</a></div>
+
+
+                </div>
+
+                <div class="col-md-12"><label class="labels">Remark</label>
+                  <textarea readonly class="form-control" name="remark" id="" cols="30" rows="5">{{poster.posterremark}}</textarea>
+                  </div> <br>
+                  {% if poster.posterremark != None and poster.status == 'pending' %}
+                   <div class="text-center"><button type="button" class="btn btn-primary btn-lg  mt-5 w-75" data-bs-toggle="modal" data-bs-target="#Postersubmition">
+                    Re upload Poster
+                  </button></div>
+                  {% endif %}
+            </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="modal fade" id="Postersubmition" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Poster submition</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="myform ">
+              <h1 class="text-center">Poster submition</h1>
+              <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <label for="name">Poster Name</label>
+                      <input value="{{poster.postername}}" name="postername" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+                    </div>
+            
+            
+            
+            
+                    <div class="form-group mt-3">
+                      <label for="num">Abstract</label>
+                      
+                      <textarea name="posterabstract" id="" cols="30" rows="10" class="form-control">{{poster.posterabstract}}</textarea>
+                    </div>
+            
+            
+                    <div class="form-group mt-3">
+                      <label for="photo">PosterFile</label>
+                      <input name="posterfile" type="file" class="form-control" id="photo">
+                    </div>
+                  
+            
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Submit Poster</button>
+                    </div>
+              </form>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            </div>
+
+    </div>
+ 
+</section>
+
+
+
+{% endblock %}

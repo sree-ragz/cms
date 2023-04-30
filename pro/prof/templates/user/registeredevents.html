@@ -1,4 +1,4 @@
-{% extends 'dashboardnav.html' %}
+{% extends 'navbar/dashboardnav.html' %}
 
 
 {% load static %}
@@ -13,9 +13,10 @@
 {% for event in event %}
             <div class="col-md-4">
                 <div class="card mt-5" style="width: 18rem;">
-                    <a href="{% url 'eventregistration' event.id %}">    <img src="{% static event.event_id.event_image.url %}" class="card-img-top" alt="..." style="height: 15rem;">  </a>
+                    <a href="{% url 'eventregistration' event.event_id.id %}">    <img src="{% static event.event_id.event_image.url %}" class="card-img-top" alt="..." style="height: 15rem;">  </a>
                       <div class="card-body">
                         <p class="card-text text-center">{{event.event_id.title}}</p>
+                        
                         <p class="card-text"><span style="font-weight: bold;">TOPIC:&nbsp;</span>{{event.event_id.topic}}
           
 

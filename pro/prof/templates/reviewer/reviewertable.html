@@ -1,4 +1,4 @@
-{% extends 'dashboardnav.html' %}
+{% extends 'navbar/dashboardnav.html' %}
 
 
 {% load static %}
@@ -109,6 +109,59 @@
           </table>
           </div>
     </div>
+
+
+
+    <div class="row mt-5">
+      <h1 class="text-center">CONTEXT DETAILS</h1>
+          <table class="table table-hover">
+              <thead>
+                <tr style="background-color:#585960; color:white ;">
+                  <th scope="col">User Name</th>
+                  <th scope="col">Context Id</th>
+                  <th scope="col">Event Name</th>
+                  <th scope="col">Context Name</th>
+                  <th scope="col">Resubmition Status</th>
+                  <th scope="col"  >From Date</th>
+                  
+                  <th scope="col" > To Date</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {% for details in reviewercontext %}
+                  <tr>
+                    <th scope="row">{{details.contextname.userid}}</th>
+                    <td>{{details.contextname.pk}}</td>
+                    <td>{{details.contextname.event.title}}</td>
+                    <td>{{details.contextname.name}}</td>
+                    <td>{% if details.contextname.submit_count == 1 %}Resubmitted{% else %}Reviewed/pending{% endif %}</td>
+                    <td>{{details.contextname.event.from_date}}</td>
+                    <td>{{details.contextname.event.to_date}}</td>
+                    <td>
+                        {% if details.contextname.status == 'pending' %}
+                        
+                        <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+                        {% elif details.contextname.status == 'accepted' %}
+                      <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+                        {% elif details.contextname.status == 'declined' %}
+                      <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+                    </td>
+                    {% endif %}
+                    <td><a href="{% url 'reviewercontextpage' details.contextname.pk %}">details</a></td>
+                    
+                    
+                    
+                  </tr>
+                  {% endfor %}
+                
+                
+                
+              </tbody>
+            </table>
+            </div>
+      </div>
     <style>
         .table{
           border-radius: 5px;

@@ -1,4 +1,4 @@
-{% extends 'dashboardnav.html' %}
+{% extends 'navbar/dashboardnav.html' %}
 
 
 {% load static %}
@@ -26,6 +26,9 @@
             <th scope="col">Registration Fees</th>
             <th scope="col">Paper</th>
             <th scope="col">Poster</th>
+            <th scope="col">Context</th>
+            <th scope="col">Gender specific</th>
+
             <th scope="col">Image</th>
             <th scope="col" colspan="3" >Actions</th>
             
@@ -47,6 +50,8 @@
             <td>{{event.registration_fees}}</td>
             <td>{{event.paper_submited}}</td>
             <td>{{event.poster_submited}}</td>
+            <td>{{event.context}}</td>
+            <td>{{event.gender_specific}}</td>
             <td>
                <a href="{{event.event_image.url}}"><img style="width: 50px;" src="{{event.event_image.url}}" alt=""></a> 
             </td>
@@ -98,16 +103,7 @@
                         <div class="form-group mt-3 text-center">
                          
                           {{form.targetted_audience}}
-                          <!-- <select  multiple="multiple">
-                            {% for pt in pt %}
-                            
-                            <option value="">{% for ta in event.targetted_audience.all %}{{ta|slice:"1"}} {% endfor %}</option>
-                           
-                             <option name="" id="" >{{pt}}</option>
-                             
-                            {% endfor %}
-                          </select> -->
-                         
+                          
               
                         </div>
                         <p><span style="color: red;">*</span> Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>
@@ -116,6 +112,14 @@
                           <input value="{{event.topic}}" name="topic" type="text" class="form-control" id="name" aria-describedby="emailHelp">
                           
                         </div>
+
+                        <div class="form-group mt-3">
+                          <label for="photo">gender_specific</label>
+                          {{form.gender_specific}}
+                          
+                          
+                        </div>
+
                         <div class="form-group mt-3">
                           <label for="photo">Venue</label>
                           <input value="{{event.venue}}" name="venue" type="text" class="form-control" id="name" aria-describedby="emailHelp">
@@ -140,6 +144,12 @@
                         </div>
                         <div class="form-group mt-3">
                           <input name="poster_submited" value="True" type="checkbox" {% if event.poster_submited %}checked{% endif %}>
+                          <label for="photo">Postersubmition</label>
+                          
+                          
+                        </div>
+                        <div class="form-group mt-3">
+                          <input name="context" value="True" type="checkbox" {% if event.context %}checked{% endif %}>
                           <label for="photo">Postersubmition</label>
                           
                           
@@ -344,10 +354,16 @@
            
 
           </div>
+          
           <p><span style="color: red;">*</span> Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>
           <div class="form-group mt-3">
             <label for="photo">Topic</label>
             <input name="topic" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+            
+          </div>
+          <div class="form-group mt-3">
+            <label for="photo">gender_specific</label>
+            {{form.gender_specific}}
             
           </div>
           <div class="form-group mt-3">
@@ -377,6 +393,13 @@
             
             
           </div>
+
+          <div class="form-group mt-3">
+            {{form.context}}
+            <label for="photo">context</label>
+            
+            
+          </div>
           
         
   
@@ -393,13 +416,6 @@
   </div>
   </div>
   </div>
-  <script>
-
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
-  </script>
       <style>
         .table{
           border-radius: 5px;

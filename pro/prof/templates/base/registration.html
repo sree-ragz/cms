@@ -7,21 +7,24 @@
 <div>   <a style="text-decoration: none;" href="{% url 'home' %}"><h1 class="bottom-right" >CMS</h1></a> </div>
     <div class="container-fluid ">
       
+      
+
     <div class="row d-flex justify-content-center align-content-center  vh-100 ">
 
     <div class="col-12 col-md-3">
     <div class="card  mx-auto border-0 shadow " >
     <div class="card-body">
-		{% if messages %}
-        
-  {% for message in messages %}
-   <div class="alert alert-info">
+		
 
-{{ message }}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-primary alert-dismissible fade show text-center" role="alert">
+         {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
 
-{% endfor %}
+      {% endfor %}
  {% endif%}
-
    
     <form method="post">
 		{% csrf_token %}

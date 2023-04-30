@@ -1,4 +1,4 @@
-{% extends 'dashboardnav.html' %}
+{% extends 'navbar/dashboardnav.html' %}
 
 
 {% load static %}
@@ -81,7 +81,7 @@
                 <div class="col-md-12"><label class="labels">Remark</label>
                   <textarea readonly class="form-control" name="remark" id="" cols="30" rows="5">{{paper.remark}}</textarea>
                   </div> <br>
-                  {% if paper.remark != None and paper.status == 'pending' %}
+                  {% if paper.remark != None  %}
                    <div class="text-center"><button type="button" class="btn btn-primary   mt-5" data-bs-toggle="modal" data-bs-target="#Papersubmition">
                     Re upload
                   </button></div>

@@ -39,6 +39,11 @@ class PosterSubmitionForm(ModelForm):
         model=PosterSubmition
         fields=['postername','posterabstract','posterfile']
 
+class ContextSubmitionForm(ModelForm):
+    class Meta:
+        model=ContextSubmition
+        fields=['name','contextfile']
+
 class EditPaperSubmitionForm(ModelForm):
     class Meta:
         model=PaperSubmition
@@ -48,6 +53,10 @@ class EditPosterSubmitionForm(ModelForm):
     class Meta:
         model=PosterSubmition
         fields=['postername','posterabstract','posterfile']
+class EditContextSubmitionForm(ModelForm):
+    class Meta:
+        model=ContextSubmition
+        fields=['name','contextfile']
 
 class EditPosterSubmitionFormReviewer(ModelForm):
     class Meta:
@@ -57,6 +66,11 @@ class EditPosterSubmitionFormReviewer(ModelForm):
 class EditPaperrSubmitionFormReviewer(ModelForm):
     class Meta:
         model=PaperSubmition
+        fields=['status','remark']
+
+class EditContextSubmitionFormReviewer(ModelForm):
+    class Meta:
+        model=ContextSubmition
         fields=['status','remark']
 
 
@@ -106,3 +120,13 @@ class AdminAddorEditReviewerPoster(ModelForm):
             'to_date':DateInput()
         }
 
+class AdminAddorEditReviewerContext(ModelForm):
+    class Meta:
+        model=Reviewer_Context
+        fields='__all__'
+
+        widgets={
+
+            'from_date':DateInput(),
+            'to_date':DateInput()
+        }

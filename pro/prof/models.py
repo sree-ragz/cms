@@ -36,17 +36,27 @@ class Participant(models.Model):
 
 
 class Event(models.Model):
+
+    gender_choice=(
+        ('male',"male"),
+        ('female','female'),
+        ('others','others'),
+        ('all','all')
+    )
     title=models.CharField(max_length=200)
     description=models.TextField(max_length=500)
     from_date=models.DateField()
     to_date=models.DateField()
     targetted_audience=models.ManyToManyField(ParticipantType)
+    gender_specific=models.CharField(max_length=20,choices=gender_choice,default='all')
     event_image=models.ImageField(upload_to='eventimages/')
     topic=models.TextField(max_length=500)
     venue=models.TextField(max_length=200)
     registration_fees=models.FloatField(default='Free')
     paper_submited=models.BooleanField(default=False)
-    poster_submited=models.BooleanField(default=False)   
+    poster_submited=models.BooleanField(default=False)
+    context=models.BooleanField(default=False)   
+
     
 class PaperSubmition(models.Model):
     userid=models.ForeignKey(User,on_delete=models.CASCADE)
@@ -57,7 +67,8 @@ class PaperSubmition(models.Model):
     status=models.CharField(max_length=50,default='pending')
     submit_count=models.IntegerField(default=0)
     remark=models.TextField(max_length=1000,null=True,blank=True)
-
+    camera_ready_submition=models.FileField(upload_to='camera_ready_submitions/',validators=[FileExtensionValidator( ['pdf'] )],null=True,blank=True)
+    camera_ready_submition_status=models.CharField(max_length=50,default='pending')
 
     
     
@@ -71,7 +82,15 @@ class PosterSubmition(models.Model):
     status=models.CharField(max_length=50,default='pending')
     submit_count=models.IntegerField(default=0)
     posterremark=models.TextField(max_length=1000,null=True,blank=True)
-    
+
+class ContextSubmition(models.Model):
+    userid=models.ForeignKey(User,on_delete=models.CASCADE)
+    name=models.CharField(max_length=100)
+    contextfile=models.FileField(upload_to='uploads/',validators=[FileExtensionValidator( ['pdf'] )])
+    event=models.ForeignKey(Event,on_delete=models.CASCADE)
+    status=models.CharField(max_length=50,default='pending')
+    submit_count=models.IntegerField(default=0)
+    remark=models.TextField(max_length=1000,null=True,blank=True)
 
 class Privillage(models.Model):
     userid=models.ForeignKey(User,on_delete=models.CASCADE)
@@ -89,6 +108,7 @@ class User_Event(models.Model):
     registered_date=models.DateTimeField(auto_now_add=True)
     paper=models.BooleanField(default=False)
     poster=models.BooleanField(default=False)
+    context=models.BooleanField(default=False)
 
 
 
@@ -100,3 +120,8 @@ class Reviewer_Paper(models.Model):
 class Reviewer_Poster(models.Model):
     userid=models.ForeignKey(User,on_delete=models.CASCADE)
     postername=models.ForeignKey(PosterSubmition,on_delete=models.CASCADE,unique=True)
+
+
+class Reviewer_Context(models.Model):
+    userid=models.ForeignKey(User,on_delete=models.CASCADE)
+    contextname=models.ForeignKey(ContextSubmition,on_delete=models.CASCADE,unique=True)

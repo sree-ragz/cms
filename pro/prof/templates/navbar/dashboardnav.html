@@ -35,15 +35,29 @@
 
     <div class="search">
       <i class='bx bx-search'></i>
+      
       <input type="text" class="hide" placeholder="Quick Search ...">
     </div>
 
     <div class="sidebar-links">
       <ul>
-        <div class="active-tab"></div>
+        
+        <div class="active-tab" {% if request.path == "/dashboard/" %} style="top: 0px;" 
+        {% elif request.path == "/registeredevents/" %} style="top: 60px;" 
+        {% elif request.path == "/submitedpaper/" %} style="top: 120px;" 
+        {% elif request.path == "/submitedposter/" %} style="top: 180px;"
+        {% elif request.path == "/submitedcontext/" %} style="top: 240px;"
+         {% elif request.path == "/settings/" %} style="top: 300px;"
+          {% elif request.path == "/admin_event_list/" %} style="top: 60px;"
+          {% elif request.path == "/admin_reviewer_paper" %} style="top: 120px;"
+           {% elif request.path == "/admin_reviewer_poster" %} style="top: 180px;"
+            {% elif request.path == "/admin_add_reviewer/" %} style="top: 240px;" 
+           {% elif request.path == "/admin_reviewer_context/" %} style="top: 300px;" 
+            {% else %} style="    background-color: #3650d400;;"
+            {% endif %}></div>
         {% if previllage.is_reviewer %}
-        <li class="tooltip-element" >
-          <a href="{% url 'reviewertable' %}" class="active" >
+        <li class="tooltip-element" data-tooltip="0">
+          <a href="{% url 'reviewertable' %}" class="active" data-active="0">
             <div class="icon">
               <i class='bx bx-tachometer'></i>
               <i class='bx bxs-tachometer'></i>
@@ -52,9 +66,8 @@
           </a>
         </li>
         {% elif previllage.participant %}
-
-        <li class="tooltip-element" >
-          <a href="{% url 'dashboard' %}" class="active" >
+        <li class="tooltip-element" data-tooltip="0">
+          <a href="{% url 'dashboard' %}" {% if request.path == "/dashboard/" %} class="active" {% endif %} data-active="0">
             <div class="icon">
               <i class='bx bx-tachometer'></i>
               <i class='bx bxs-tachometer'></i>
@@ -72,12 +85,11 @@
             <span class="link hide">Dashboard</span>
           </a>
         </li>
-
         {% endif %}
-        {% if previllage.is_reviewer %}
-        {% elif previllage.participant %}
+
+        {% if previllage.participant %}
         <li class="tooltip-element" data-tooltip="1">
-            <a href="{% url 'registeredevents' %}" data-active="1">
+            <a href="{% url 'registeredevents' %}" {% if request.path == "/registeredevents/" %} class="active" {% endif %} data-active="1">
                 <div class="icon">
                     <i class='bx bx-notepad'></i>
                     <i class='bx bxs-notepad'></i>
@@ -85,8 +97,8 @@
               <span class="link hide">Registered Events</span>
             </a>
           </li> 
-          <li class="tooltip-element" data-tooltip="1">
-            <a href="{% url 'submitedpaper' %}" data-active="1">
+          <li class="tooltip-element" data-tooltip="2">
+            <a href="{% url 'submitedpaper' %}"  {% if request.path == "/submitedpaper/" %} class="active" {% endif %} data-active="2">
                 <div class="icon">
                     <i class='bx bx-notepad'></i>
                     <i class='bx bxs-notepad'></i>
@@ -94,17 +106,26 @@
               <span class="link hide">Submited Paper</span>
             </a>
           </li> 
-          <li class="tooltip-element" data-tooltip="1">
-            <a href="{% url 'submitedposter' %}" data-active="1">
+          <li class="tooltip-element" data-tooltip="3">
+            <a href="{% url 'submitedposter' %}" {% if request.path == "/submitedposter/" %} class="active" {% endif %}  data-active="3">
                 <div class="icon">
                     <i class='bx bx-notepad'></i>
                     <i class='bx bxs-notepad'></i>
                   </div>
               <span class="link hide">Submited Poster</span>
             </a>
+          </li>
+          <li class="tooltip-element" data-tooltip="4">
+            <a href="{% url 'submitedcontext' %}" {% if request.path == "/submitedcontext/" %} class="active" {% endif %} data-active="4">
+              <div class="icon">
+                <i class='bx bx-cog'></i>
+                <i class='bx bxs-cog'></i>
+              </div>
+              <span class="link hide">submited context</span>
+            </a>
           </li> 
-        <li class="tooltip-element" data-tooltip="1">
-          <a href="{% url 'settings' %}" data-active="2">
+        <li class="tooltip-element" data-tooltip="5">
+          <a href="{% url 'settings' %}" {% if request.path == "/settings/" %} class="active" {% endif %} data-active="5">
             <div class="icon">
               <i class='bx bx-cog'></i>
               <i class='bx bxs-cog'></i>
@@ -112,11 +133,17 @@
             <span class="link hide">Settings</span>
           </a>
         </li> 
-
+        <div class="tooltip">
+          <span class="show">Dashboard</span>
+          <span>Registered Events</span>
+          <span>Submitted Paper</span>
+          <span>Submitted Poster</span>
+          <span>Submitted Context</span>
+          <span>Settings</span>
+        </div>
         {% elif previllage.is_admin %}
-
         <li class="tooltip-element" data-tooltip="1">
-          <a href="{% url 'admin_event_list' %}" data-active="1">
+          <a href="{% url 'admin_event_list' %}" {% if request.path == "/admin_event_list/" %} class="active" {% endif %} data-active="1">
               <div class="icon">
                   <i class='bx bx-notepad'></i>
                   <i class='bx bxs-notepad'></i>
@@ -125,8 +152,8 @@
           </a>
         </li> 
 
-        <li class="tooltip-element" data-tooltip="1">
-          <a href="{% url 'admin_reviewer_paper' %}" data-active="1">
+        <li class="tooltip-element" data-tooltip="2">
+          <a href="{% url 'admin_reviewer_paper' %}" {% if request.path == "/admin_reviewer_paper/" %} class="active" {% endif %} data-active="2">
               <div class="icon">
                   <i class='bx bx-notepad'></i>
                   <i class='bx bxs-notepad'></i>
@@ -134,8 +161,8 @@
             <span class="link hide">Reviewer Paper</span>
           </a>
         </li> 
-        <li class="tooltip-element" data-tooltip="1">
-          <a href="{% url 'admin_reviewer_poster' %}" data-active="1">
+        <li class="tooltip-element" data-tooltip="3">
+          <a href="{% url 'admin_reviewer_poster' %}" {% if request.path == "/admin_reviewer_poster" %} class="active" {% endif %} data-active="3">
               <div class="icon">
                   <i class='bx bx-notepad'></i>
                   <i class='bx bxs-notepad'></i>
@@ -143,9 +170,10 @@
             <span class="link hide">Reviewer Poster</span>
           </a>
         </li> 
+        
 
-        <li class="tooltip-element" data-tooltip="1">
-          <a href="{% url 'admin_add_reviewer' %}" data-active="1">
+        <li class="tooltip-element" data-tooltip="4">
+          <a href="{% url 'admin_add_reviewer' %}" {% if request.path == "/admin_add_reviewer" %} class="active" {% endif %} data-active="4">
               <div class="icon">
                   <i class='bx bx-notepad'></i>
                   <i class='bx bxs-notepad'></i>
@@ -153,16 +181,26 @@
             <span class="link hide">Reviewers</span>
           </a>
         </li> 
-        {% endif %}
-        <li class="tooltip-element" data-tooltip="2">
-          <a href="#" data-active="3">
-            <div class="icon">
-              <i class='bx bx-help-circle'></i>
-              <i class='bx bxs-help-circle'></i>
-            </div>
-            <span class="link hide">Help</span>
+
+        <li class="tooltip-element" data-tooltip="5">
+          <a href="{% url 'admin_reviewer_context' %}" {% if request.path == "/admin_reviewer_context/" %} class="active" {% endif %} data-active="3">
+              <div class="icon">
+                  <i class='bx bx-notepad'></i>
+                  <i class='bx bxs-notepad'></i>
+                </div>
+            <span class="link hide">Reviewer context</span>
           </a>
-        </li>
+        </li> 
+        <div class="tooltip">
+          <span class="show">Dashboard</span>
+          <span>Events</span>
+          <span>Reviewer Paper</span>
+          <span>Reviewer Poster</span>
+          <span>Reviewer</span>
+          <span>Reviewer context</span>
+        </div>
+        {% endif %}
+        
         
         <!-- <div class="tooltip">
           <span class="show">Dashboard</span>

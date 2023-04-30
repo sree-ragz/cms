@@ -1,0 +1,56 @@
+{% extends 'navbar/dashboardnav.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+<section>
+
+    <div class="container">
+        <div class="row">
+{% for context in context %}
+            <div class="col-md-4">
+                <div class=" mt-5" style="width: 18rem; border: 1px solid gray; border-radius: 5px;">
+                    <a href="">    <img src="{% static context.event.event_image.url %}" class="card-img-top" alt="..." style="height: 15rem;">  </a>
+                      <div class="card-body">
+                        <p class="card-text text-center">{{context.event.title}}</p>
+                        <p class="card-text"><span style="font-weight: bold;">CONTEXT NAME:&nbsp;</span>{{context.name}}
+          
+
+
+                        </p>
+                        <p class="card-text"><span style="font-weight: bold;">STATUS:&nbsp;</span>
+
+                            {% if context.status == 'pending' %}
+                            <span class="bg-warning rounded">Pending</span>
+                            {% elif context.status == 'accepted' %}
+
+                            <span class="bg-success rounded">Accepted</span>
+                            {% elif context.status == 'declined' %}
+                            <span class="bg-danger rounded">Declined</span>
+                            {% endif %}
+          
+
+
+                        </p>
+
+                       <div class="text-center"><a href="{% url 'viewsubmitedcontext' context.id %}" class="btn btn-primary ">view</a></div> 
+
+                        
+                        
+                        
+        
+        
+
+      
+                      </div>
+                    </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
