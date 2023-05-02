@@ -102,12 +102,12 @@ def reviewercontextpage(request, id):
             if status == 'accepted':
                 to_email=context.userid.email
                 subject = "your context is accepted"
-                message = f"your context is accepted fot {context.event.title} conference"
+                message = f"your context is accepted for {context.event.title} conference"
                 sent_mail_from(to_email,subject,message)
             elif status == 'declined':
                 to_email=context.userid.email
                 subject = "your context is declined"
-                message = f"your context is declined fot {context.event.title} conference"
+                message = f"your context is declined for {context.event.title} conference"
                 sent_mail_from(to_email,subject,message)
 
             return redirect("reviewertable")
@@ -139,12 +139,12 @@ def reviewerpaperpage(request, id):
             if status == 'accepted':
                 to_email=paper.userid.email
                 subject = "your paper is accepted"
-                message = f"your paper is accepted fot {paper.event.title} conference"
+                message = f"your paper is accepted for {paper.event.title} conference"
                 sent_mail_from(to_email,subject,message)
             elif status == 'declined':
                 to_email=paper.userid.email
                 subject = "your paper is declined"
-                message = f"your paper is declined fot {paper.event.title} conference"
+                message = f"your paper is declined for {paper.event.title} conference"
                 sent_mail_from(to_email,subject,message)
 
             return redirect("reviewertable")
@@ -154,3 +154,71 @@ def reviewerpaperpage(request, id):
         "reviewer/reviewerpaperpage.html",
         {"obj": paper, "form": form, "previllage": previllage},
     )
+
+
+def reviewer_camera_ready_paper(request,id):
+    camera_ready_paper=PaperSubmition.objects.filter(id=id).first()
+
+    if request.method == 'POST':
+        form=EditCameraReadyPaperSubmitionFormReviewer(request.POST,request.FILES,instance=camera_ready_paper)
+
+        if form.is_valid():
+            form.save()
+            status=form.cleaned_data["camera_ready_submition_status"]
+            if status == 'accepted':
+                to_email=camera_ready_paper.userid.email
+                subject = "your camera raedy paper is accepted"
+                message = f"your camera raedy paper is accepted for {camera_ready_paper.event.title} conference"
+                sent_mail_from(to_email,subject,message)
+            elif status == 'declined':
+                to_email=camera_ready_paper.userid.email
+                subject = "your camera raedy paper is declined"
+                message = f"your camera raedy paper for {camera_ready_paper.event.title} conference"
+                sent_mail_from(to_email,subject,message)
+
+            return redirect('reviewertable')
+
+def reviewer_camera_ready_poster(request,id):
+    camera_ready_poster=PosterSubmition.objects.filter(id=id).first()
+
+    if request.method == 'POST':
+        form=EditCameraReadyPosterSubmitionFormReviewer(request.POST,request.FILES,instance=camera_ready_poster)
+
+        if form.is_valid():
+            form.save()
+            status=form.cleaned_data["camera_ready_submition_status"]
+            if status == 'accepted':
+                to_email=camera_ready_poster.userid.email
+                subject = "your camera raedy poster is accepted"
+                message = f"your camera raedy poster is accepted for {camera_ready_poster.event.title} conference"
+                sent_mail_from(to_email,subject,message)
+            elif status == 'declined':
+                to_email=camera_ready_poster.userid.email
+                subject = "your camera raedy poster is declined"
+                message = f"your camera raedy poster for {camera_ready_poster.event.title} conference"
+                sent_mail_from(to_email,subject,message)
+
+            return redirect('reviewertable')
+
+
+def reviewer_camera_ready_context(request,id):
+    camera_ready_context=ContextSubmition.objects.filter(id=id).first()
+
+    if request.method == 'POST':
+        form=EditCameraReadyContextSubmitionFormReviewer(request.POST,request.FILES,instance=camera_ready_context)
+
+        if form.is_valid():
+            form.save()
+            status=form.cleaned_data["camera_ready_submition_status"]
+            if status == 'accepted':
+                to_email=camera_ready_context.userid.email
+                subject = "your camera raedy context is accepted"
+                message = f"your camera raedy context is accepted for {camera_ready_context.event.title} conference"
+                sent_mail_from(to_email,subject,message)
+            elif status == 'declined':
+                to_email=camera_ready_context.userid.email
+                subject = "your camera raedy context is declined"
+                message = f"your camera raedy context for {camera_ready_context.event.title} conference"
+                sent_mail_from(to_email,subject,message)
+
+            return redirect('reviewertable')

@@ -22,6 +22,8 @@
             
             <th scope="col"  > To Date</th>
             <th scope="col">Status</th>
+            <th scope="col">Camera Ready Paper Status</th>
+
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -44,8 +46,26 @@
               <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
                 {% elif details.papername.status == 'declined' %}
               <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+              {% endif %}
             </td>
+
+            {% if details.papername.status == 'accepted' %}
+            <td>
+              {% if details.papername.camera_ready_submition_status == 'pending' %}
+              
+              <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+              {% elif details.papername.camera_ready_submition_status == 'accepted' %}
+            <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+              {% elif details.papername.camera_ready_submition_status == 'declined' %}
+            <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+            {% elif details.papername.camera_ready_submition_status == 'active' %}
+            <span style=" border-radius: 3px;" class="btn btn-info text-white ">Active</span>
             {% endif %}
+          </td>
+          {% else %}
+          <td></td>
+          {% endif %}
+            
             <td><a href="{% url 'reviewerpaperpage' details.papername.pk %}">details</a></td>
             
             
@@ -73,6 +93,7 @@
                 
                 <th scope="col" > To Date</th>
                 <th scope="col">Status</th>
+                <th scope="col">Camera Ready Poster Status</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -96,6 +117,23 @@
                     <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
                   </td>
                   {% endif %}
+
+                    {% if details.postername.status == 'accepted' %}
+                  <td>
+                    {% if details.postername.camera_ready_submition_status == 'pending' %}
+                    
+                    <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+                    {% elif details.postername.camera_ready_submition_status == 'accepted' %}
+                  <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+                    {% elif details.postername.camera_ready_submition_status == 'declined' %}
+                  <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+                  {% elif details.postername.camera_ready_submition_status == 'active' %}
+                  <span style=" border-radius: 3px;" class="btn btn-info text-white ">Active</span>
+                  {% endif %}
+                </td>
+                {% else %}
+                <td></td>
+                {% endif %}
                   <td><a href="{% url 'reviewerposterpage' details.postername.pk %}">details</a></td>
                   
                   
@@ -126,6 +164,7 @@
                   
                   <th scope="col" > To Date</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Camera Ready Context Status</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -149,6 +188,24 @@
                       <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
                     </td>
                     {% endif %}
+
+
+                    {% if details.contextname.status == 'accepted' %}
+                    <td>
+                      {% if details.contextname.camera_ready_submition_status == 'pending' %}
+                      
+                      <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+                      {% elif details.contextname.camera_ready_submition_status == 'accepted' %}
+                    <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+                      {% elif details.contextname.camera_ready_submition_status == 'declined' %}
+                    <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+                    {% elif details.contextname.camera_ready_submition_status == 'active' %}
+                    <span style=" border-radius: 3px;" class="btn btn-info text-white ">Active</span>
+                    {% endif %}
+                  </td>
+                  {% else %}
+                  <td></td>
+                  {% endif %}
                     <td><a href="{% url 'reviewercontextpage' details.contextname.pk %}">details</a></td>
                     
                     

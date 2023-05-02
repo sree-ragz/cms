@@ -68,7 +68,7 @@ class PaperSubmition(models.Model):
     submit_count=models.IntegerField(default=0)
     remark=models.TextField(max_length=1000,null=True,blank=True)
     camera_ready_submition=models.FileField(upload_to='camera_ready_submitions/',validators=[FileExtensionValidator( ['pdf'] )],null=True,blank=True)
-    camera_ready_submition_status=models.CharField(max_length=50,default='pending')
+    camera_ready_submition_status=models.CharField(max_length=50,default='active')
 
     
     
@@ -82,6 +82,8 @@ class PosterSubmition(models.Model):
     status=models.CharField(max_length=50,default='pending')
     submit_count=models.IntegerField(default=0)
     posterremark=models.TextField(max_length=1000,null=True,blank=True)
+    camera_ready_submition=models.FileField(upload_to='camera_ready_submitions/',validators=[FileExtensionValidator( ['pdf'] )],null=True,blank=True)
+    camera_ready_submition_status=models.CharField(max_length=50,default='active')
 
 class ContextSubmition(models.Model):
     userid=models.ForeignKey(User,on_delete=models.CASCADE)
@@ -91,6 +93,8 @@ class ContextSubmition(models.Model):
     status=models.CharField(max_length=50,default='pending')
     submit_count=models.IntegerField(default=0)
     remark=models.TextField(max_length=1000,null=True,blank=True)
+    camera_ready_submition=models.FileField(upload_to='camera_ready_submitions/',validators=[FileExtensionValidator( ['pdf'] )],null=True,blank=True)
+    camera_ready_submition_status=models.CharField(max_length=50,default='active')
 
 class Privillage(models.Model):
     userid=models.ForeignKey(User,on_delete=models.CASCADE)

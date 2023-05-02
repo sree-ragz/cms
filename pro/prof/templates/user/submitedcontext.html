@@ -35,6 +35,26 @@
 
                         </p>
 
+                        {% if context.camera_ready_submition_status != 'active' %}
+
+                        <p class="card-text"><span style="font-weight: bold;">CAMERA READY PAPER STATUS:&nbsp;</span>
+
+                            {% if context.camera_ready_submition_status == 'pending' %}
+                            <span class="bg-warning rounded">Pending</span>
+                            {% elif context.camera_ready_submition_status == 'accepted' %}
+
+                            <span class="bg-success rounded">Accepted</span>
+                            {% elif context.camera_ready_submition_status == 'declined' %}
+                            <span class="bg-danger rounded">Declined</span>
+                            {% endif %}
+          
+
+
+                        </p>
+
+                        {% endif %}
+
+
                        <div class="text-center"><a href="{% url 'viewsubmitedcontext' context.id %}" class="btn btn-primary ">view</a></div> 
 
                         

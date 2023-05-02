@@ -18,16 +18,18 @@ urlpatterns = [
     path('viewsubmitedposter/<int:id>',user_view.viewsubmitedposter,name='viewsubmitedposter'),
     path('viewsubmitedcontext/<int:id>',user_view.viewsubmitedcontext,name='viewsubmitedcontext'),
     path('reviewerposterpage/<int:id>',reviewer_view.reviewerposterpage,name='reviewerposterpage'),
-
-
+     path('reviewer_camera_ready_paper/<int:id>',reviewer_view.reviewer_camera_ready_paper,name='reviewer_camera_ready_paper'),
+ path('reviewer_camera_ready_poster/<int:id>',reviewer_view.reviewer_camera_ready_poster,name='reviewer_camera_ready_poster'),
+ path('reviewer_camera_ready_context/<int:id>',reviewer_view.reviewer_camera_ready_context,name='reviewer_camera_ready_context'),
     path('reviewerpaperpage/<int:id>',reviewer_view.reviewerpaperpage,name='reviewerpaperpage'),
     path('reviewercontextpage/<int:id>',reviewer_view.reviewercontextpage,name='reviewercontextpage'),
    
     path('register_as_participant/<int:event_id>',user_view.register_as_participant,name='register_as_participant'),
     path('eventregistration/<int:event_id>',user_view.eventregistration,name='eventregistration'),
     path('user_context_registration/<int:event_id>',user_view.user_context_registration,name='user_context_registration'),
-    
-    
+    path('camera_ready_paper_submition/<int:paper_id>',user_view.camera_ready_paper_submition,name='camera_ready_paper_submition'),
+    path('camera_ready_poster_submition/<int:id>',user_view.camera_ready_poster_submition,name='camera_ready_poster_submition'),
+    path('camera_ready_context_submition/<int:id>',user_view.camera_ready_context_submition,name='camera_ready_context_submition'),
     path('register/',login_and_signup_view.register,name='register'),
     path('register2/',login_and_signup_view.register2,name='register2'),
 

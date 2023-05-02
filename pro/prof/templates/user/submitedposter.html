@@ -35,6 +35,26 @@
 
                         </p>
 
+
+                        {% if poster.camera_ready_submition_status != 'active' %}
+
+                        <p class="card-text"><span style="font-weight: bold;">CAMERA READY PAPER STATUS:&nbsp;</span>
+
+                            {% if poster.camera_ready_submition_status == 'pending' %}
+                            <span class="bg-warning rounded">Pending</span>
+                            {% elif poster.camera_ready_submition_status == 'accepted' %}
+
+                            <span class="bg-success rounded">Accepted</span>
+                            {% elif poster.camera_ready_submition_status == 'declined' %}
+                            <span class="bg-danger rounded">Declined</span>
+                            {% endif %}
+          
+
+
+                        </p>
+
+                        {% endif %}
+
                        <div class="text-center"><a href="{% url 'viewsubmitedposter' poster.id %}" class="btn btn-primary ">view</a></div> 
 
                         

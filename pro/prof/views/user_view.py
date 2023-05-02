@@ -313,6 +313,50 @@ def viewsubmitedpaper(request, id):
         {"paper": paper, "form": form, "previllage": previllage},
     )
 
+def camera_ready_paper_submition(request,paper_id):
+
+    camera_ready_paper=PaperSubmition.objects.filter(id=paper_id).first()
+
+    if request.method == "POST":
+        form=CameraReadyPaperSubmitionForm(request.POST,request.FILES,instance=camera_ready_paper)
+        if form.is_valid():
+            camera_paper=form.save(commit=False)
+            camera_paper.camera_ready_submition_status='pending'
+            camera_paper.save()
+            to_email=camera_ready_paper.userid.email
+            subject = "your are successfully submitted camera ready paper"
+            message = f"your are successfully submitted camera ready paper for {camera_ready_paper.event.title}"
+            sent_mail_from(to_email,subject,message)
+            return redirect('viewsubmitedpaper',paper_id)
+
+def camera_ready_poster_submition(request,id):
+    camera_ready_poster=PosterSubmition.objects.filter(id=id).first()
+
+    if request.method == "POST":
+        form=CameraReadyPosterSubmitionForm(request.POST,request.FILES,instance=camera_ready_poster)
+        if form.is_valid():
+            camera_poster=form.save(commit=False)
+            camera_poster.camera_ready_submition_status='pending'
+            camera_poster.save()
+            to_email=camera_ready_poster.userid.email
+            subject = "your are successfully submitted camera ready Poster"
+            message = f"your are successfully submitted camera ready poster for {camera_ready_poster.event.title}"
+            sent_mail_from(to_email,subject,message)
+            return redirect('viewsubmitedposter',id)
+def camera_ready_context_submition(request,id):
+    camera_ready_context=ContextSubmition.objects.filter(id=id).first()
+
+    if request.method == "POST":
+        form=CameraReadyContextSubmitionForm(request.POST,request.FILES,instance=camera_ready_context)
+        if form.is_valid():
+            camera_context=form.save(commit=False)
+            camera_context.camera_ready_submition_status='pending'
+            camera_context.save()
+            to_email=camera_ready_context.userid.email
+            subject = "your are successfully submitted camera ready context"
+            message = f"your are successfully submitted camera ready context for {camera_ready_context.event.title}"
+            sent_mail_from(to_email,subject,message)
+            return redirect('viewsubmitedcontext',id)
 
 def viewsubmitedposter(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()

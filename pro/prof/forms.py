@@ -58,11 +58,35 @@ class EditContextSubmitionForm(ModelForm):
         model=ContextSubmition
         fields=['name','contextfile']
 
+
+class CameraReadyPaperSubmitionForm(ModelForm):
+    class Meta:
+        model=PaperSubmition
+        fields=['camera_ready_submition']
+class CameraReadyPosterSubmitionForm(ModelForm):
+    class Meta:
+        model=PosterSubmition
+        fields=['camera_ready_submition']
+class CameraReadyContextSubmitionForm(ModelForm):
+    class Meta:
+        model=ContextSubmition
+        fields=['camera_ready_submition']
 class EditPosterSubmitionFormReviewer(ModelForm):
     class Meta:
         model=PosterSubmition
         fields=['status','posterremark']
-
+class EditCameraReadyPaperSubmitionFormReviewer(ModelForm):
+    class Meta:
+        model=PaperSubmition
+        fields=['camera_ready_submition_status']
+class EditCameraReadyPosterSubmitionFormReviewer(ModelForm):
+    class Meta:
+        model=PosterSubmition
+        fields=['camera_ready_submition_status']
+class EditCameraReadyContextSubmitionFormReviewer(ModelForm):
+    class Meta:
+        model=ContextSubmition
+        fields=['camera_ready_submition_status']
 class EditPaperrSubmitionFormReviewer(ModelForm):
     class Meta:
         model=PaperSubmition

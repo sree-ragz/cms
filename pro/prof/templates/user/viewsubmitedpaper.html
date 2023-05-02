@@ -81,11 +81,36 @@
                 <div class="col-md-12"><label class="labels">Remark</label>
                   <textarea readonly class="form-control" name="remark" id="" cols="30" rows="5">{{paper.remark}}</textarea>
                   </div> <br>
-                  {% if paper.remark != None  %}
+                  {% if paper.remark == '' and paper.status == 'pending'  %}
                    <div class="text-center"><button type="button" class="btn btn-primary   mt-5" data-bs-toggle="modal" data-bs-target="#Papersubmition">
                     Re upload
                   </button></div>
                   {% endif %}
+
+
+                 {% if paper.status == 'accepted' and paper.camera_ready_submition_status == 'active'  %}
+                   <div class="text-center"><button type="button" class="btn btn-primary   mt-5" data-bs-toggle="modal" data-bs-target="#CameraReadyPapersubmition">
+                    Submit Camera Ready Paper
+                  </button></div>
+                  {% endif %}
+                  
+
+
+                    {% if paper.camera_ready_submition_status != 'active' %}
+                  <div class="col-md-12"><label class="labels"> Camera ready paperfile</label>
+                    
+                    <embed type="application/pdf"
+                        src="{% static paper.camera_ready_submition.url %}"
+                        width="100%" height="100%"/>
+
+                        <div class="text-center"><a class="btn btn-primary" href="{{paper.camera_ready_submition.url}}">view</a></div>
+
+
+                </div>
+                {% endif %}
+
+
+
             </div>
             </div>
         </div>
@@ -144,6 +169,39 @@
 
 
 
+          <div class="modal fade" id="CameraReadyPapersubmition" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Camera Ready Paper submition</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="myform ">
+              <h1 class="text-center">Camera Ready Paper submition</h1>
+              <form method="post" action="/camera_ready_paper_submition/{{paper.id}}" enctype="multipart/form-data">
+                  {% csrf_token %}
+            
+                    <div class="form-group mt-3">
+                      <label for="photo">Camera Ready PaperFile</label>
+                      <input name="camera_ready_submition" type="file" class="form-control" id="photo">
+                    </div>
+                  
+            
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">submit Camera Ready paper</button>
+                       
+                      
+                    </div>
+              </form>
+            </div>
+            </div>
+            
+            </div>
+            </div>
+            </div>
+  
     </div>
  
 </section>
