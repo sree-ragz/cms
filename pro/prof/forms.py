@@ -15,6 +15,11 @@ class CreateUserForm(UserCreationForm):
         model=User
         fields=['username','email','password1','password2']
 
+class CreateChairAndCochairForm(UserCreationForm):
+    class Meta:
+        model=User
+        fields=['username','email','password1','password2']
+
 
 class Registration2Form(ModelForm):
     class Meta:
@@ -74,7 +79,7 @@ class CameraReadyContextSubmitionForm(ModelForm):
 class EditPosterSubmitionFormReviewer(ModelForm):
     class Meta:
         model=PosterSubmition
-        fields=['status','posterremark']
+        fields=['status','posterremark','camera_ready_submition_status','admin_remark']
 class EditCameraReadyPaperSubmitionFormReviewer(ModelForm):
     class Meta:
         model=PaperSubmition
@@ -91,11 +96,15 @@ class EditPaperrSubmitionFormReviewer(ModelForm):
     class Meta:
         model=PaperSubmition
         fields=['status','remark']
+class EditPaperrSubmitionFormAdmin(ModelForm):
+    class Meta:
+        model=PaperSubmition
+        fields=['status','camera_ready_submition_status','admin_remark']
 
 class EditContextSubmitionFormReviewer(ModelForm):
     class Meta:
         model=ContextSubmition
-        fields=['status','remark']
+        fields=['status','remark','camera_ready_submition_status','admin_remark']
 
 
 
@@ -154,3 +163,10 @@ class AdminAddorEditReviewerContext(ModelForm):
             'from_date':DateInput(),
             'to_date':DateInput()
         }
+
+
+class AdminUser(ModelForm):
+    class Meta:
+        model=Participant
+        fields=["Rstatus"]
+        

@@ -30,6 +30,8 @@
             <th scope="col">Gender specific</th>
 
             <th scope="col">Image</th>
+            <th scope="col">Chair</th>
+            <th scope="col">Co Chair</th>
             <th scope="col" colspan="3" >Actions</th>
             
             
@@ -54,6 +56,16 @@
             <td>{{event.gender_specific}}</td>
             <td>
                <a href="{{event.event_image.url}}"><img style="width: 50px;" src="{{event.event_image.url}}" alt=""></a> 
+            </td>
+            <td>
+              
+              
+              {{event.chair_id}}
+              </td>
+            <td>
+              
+              {{event.co_chair_id}}
+              
             </td>
             <td >
               
@@ -154,7 +166,42 @@
                           
                           
                         </div>
-                        
+                        <div class="form-group mt-3">
+                          <label for="name">Chair Name</label>
+                          
+                          <select name="chair_id" id="">
+                           
+                            {% for i in chair %}
+                            <option value=""></option>
+                            {% if event.chair_id == i.userid %}
+                            <option value="{{i.userid.id}}" selected>{{i.userid.username}} </option>
+                            
+                            {% else %}
+                            <option value="{{i.userid.id}}">{{i.userid.username}} </option>
+                            
+                            {% endif %}
+                            {% endfor %}
+                          </select>
+                        </div>
+
+                        <div class="form-group mt-3">
+                          <label for="name">Co Chair Name</label>
+                          
+                          <select name="co_chair_id" id="">
+                           
+                            {% for i in cochair %}
+                            <option value=""></option>
+                            {% if event.co_chair_id == i.userid %}
+                            <option value="{{i.userid.id}}" selected>{{i.userid.username}}</option>
+                            
+                            
+                            {% else %}
+                            <option value="{{i.userid.id}}">{{i.userid.username}}</option>
+                            
+                            {% endif %}
+                            {% endfor %}
+                          </select>
+                        </div>
                       
                 
                         <div class="modal-footer">
@@ -246,6 +293,23 @@
       
       
           </p>
+
+          <p class="card-text"><span style="font-weight: bold;">Chair:&nbsp;</span>{{event.chair_id}}
+                  
+                              
+                             
+          </span> 
+
+
+    </p>
+    <p class="card-text"><span style="font-weight: bold;">Co Chair:&nbsp;</span>{{event.co_chair_id}}
+                  
+                              
+                             
+    </span> 
+
+
+</p>
                             <div class="d-flex flex-row">
                               <div>
                   
@@ -400,6 +464,32 @@
             
             
           </div>
+
+          <div class="form-group mt-3">
+            <label for="name">Chair Name(optional)</label>
+            
+            <select name="chair_id" id="">
+              <option value="" ></option>
+              {% for i in chair %}
+              <option value="{{i.userid.id}}">{{i.userid.username}}</option>
+              {% endfor %}
+            </select>
+            
+          </div>
+
+          <div class="form-group mt-3">
+            <label for="name">Co Chair Name(optional)</label>
+            
+            <select name="co_chair_id" id="">
+              <option value="" ></option>
+              {% for i in cochair %}
+              <option value="{{i.userid.id}}">{{i.userid.username}}</option>
+              {% endfor %}
+            </select>
+            
+          </div>
+
+
           
         
   

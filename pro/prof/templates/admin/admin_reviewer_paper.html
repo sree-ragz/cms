@@ -28,6 +28,7 @@
             <th scope="col">Registration Fees</th>
             
             <th scope="col">Status</th>
+            <th scope="col">CRP Status</th>
             <th scope="col" colspan="3" >Actions</th>
             
             
@@ -57,8 +58,24 @@
                             {% endif %}
             </td>
             
-            
-            <td >
+            {% if event.papername.status == 'accepted' %}
+            <td>
+              {% if event.papername.camera_ready_submition_status == 'pending' %}
+              
+              <span  class="bg-warning  rounded ">Pending</span>
+              {% elif event.papername.camera_ready_submition_status == 'accepted' %}
+            <span class="bg-success rounded">Approved</span>
+              {% elif event.papername.camera_ready_submition_status == 'declined' %}
+            <span class="bg-danger rounded">Declined</span>
+            {% elif event.papername.camera_ready_submition_status == 'active' %}
+            <span  class="bg-info rounded ">Active</span>
+            {% endif %}
+          </td>
+          {% else %}
+          <td></td>
+          {% endif %}
+            <td>
+              
               
                        
               <a style="cursor: pointer;" class="" data-bs-toggle="modal" data-bs-target="#editevent{{event.id}}"> <span data-bs-toggle="tooltip" data-bs-placement="top" title="edit"><ion-icon   style="font-size: 22px; color: orange;pointer-events: none;" name="pencil"></ion-icon> </span></a>
@@ -159,8 +176,15 @@
                     </div>
                     <div class="modal-body">
                       <div class=" " >
-                        
-
+                        <form action="/admin_edit_paperpage/{{event.papername.id}}" method="post">
+                          {% csrf_token %}
+                        <div class="d-flex justify-content-center"><select name="status" class="form-select w-50" aria-label="Default select example">
+                          <option class="" value="pending" {% if event.papername.status == 'pending' %} selected {% endif %}>Pending</option>
+                          
+                          <option class=" " value="accepted"  {% if event.papername.status == 'accepted' %} selected {% endif %}>Accepted</option>
+                          <option class=" " value="declined"  {% if event.papername.status == 'declined' %} selected {% endif %}>Decline</option>
+                        </select></div>
+      
 
                   <div class=" mt-5">
                     <p><span style="font-weight: bold;">PAPER NAME:</span> 
@@ -188,14 +212,62 @@
                   <div   class="mt-5 text-center">
                     <div class="form-floating">
                       
-                        <textarea readonly name="remark" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px">{{event.papername.remark}}</textarea>
-                        <label for="floatingTextarea2">Remarks</label>
+                        <textarea readonly  class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">{{event.papername.remark}}</textarea>
+                        <label for="floatingTextarea2"> Rewiewer Remarks</label>
                         
                       </div>
                       
 
                   </div>
-              
+                  <div   class="mt-5 text-center">
+                    <div class="form-floating">
+                      
+                        <textarea readonly  class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">{{event.papername.chair_co_chair_remark}}</textarea>
+                        <label for="floatingTextarea2">chair / co_chair Remarks</label>
+                        
+                      </div>
+                      
+
+                  </div>
+                  <div class="d-flex justify-content-center mt-5"><select name="camera_ready_submition_status" class="form-select w-50" aria-label="Default select example">
+                    <option class="" value="pending" {% if event.papername.camera_ready_submition_status == 'pending' %} selected {% endif %}>Pending</option>
+                    
+                    <option class=" " value="accepted" {% if event.papername.camera_ready_submition_status == 'accepted' %} selected {% endif %}>Accepted</option>
+                    <option class=" " value="declined" {% if event.papername.camera_ready_submition_status == 'declined' %} selected {% endif %}>Decline</option>
+                  </select>
+                  
+                </div>
+                  <div class="mt-5 text-center">
+                    <label for="">CRP FILE</label>
+
+                    <embed type="application/pdf"
+                            src="{% static event.papername.camera_ready_submition.url %}"
+                            width="100%" height="100%"/>
+
+
+                            <a href="{{ event.papername.camera_ready_submition.url }}" class="btn btn-primary mt-3">Preview</a>
+
+                  </div>
+
+                  <div   class="mt-5 text-center">
+                    <div class="form-floating">
+                      
+                        <textarea  name="admin_remark" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">{{event.papername.admin_remark}}</textarea>
+                        <label for="floatingTextarea2">admin Remarks</label>
+                        
+                      </div>
+                      
+
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-info">Save changes</button>
+                     
+                    
+                  </div>
+
+                </form>
                       </div>
                   
                     </div>

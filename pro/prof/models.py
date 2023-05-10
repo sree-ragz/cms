@@ -12,6 +12,7 @@ class ParticipantType(models.Model):
         return self.type
     
 
+   
 
 class Participant(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
@@ -55,7 +56,11 @@ class Event(models.Model):
     registration_fees=models.FloatField(default='Free')
     paper_submited=models.BooleanField(default=False)
     poster_submited=models.BooleanField(default=False)
-    context=models.BooleanField(default=False)   
+    context=models.BooleanField(default=False) 
+    
+    chair_id=models.ForeignKey(User,default=None,null=True,blank=True,on_delete=models.CASCADE,related_name="chairid") 
+    
+    co_chair_id=models.ForeignKey(User,default=None,null=True,blank=True,related_name="co_chairid",on_delete=models.CASCADE)   
 
     
 class PaperSubmition(models.Model):
@@ -69,6 +74,9 @@ class PaperSubmition(models.Model):
     remark=models.TextField(max_length=1000,null=True,blank=True)
     camera_ready_submition=models.FileField(upload_to='camera_ready_submitions/',validators=[FileExtensionValidator( ['pdf'] )],null=True,blank=True)
     camera_ready_submition_status=models.CharField(max_length=50,default='active')
+    chair_co_chair_remark=models.TextField(max_length=1000,null=True,blank=True)
+    
+    admin_remark=models.TextField(max_length=1000,null=True,blank=True)
 
     
     
@@ -84,6 +92,9 @@ class PosterSubmition(models.Model):
     posterremark=models.TextField(max_length=1000,null=True,blank=True)
     camera_ready_submition=models.FileField(upload_to='camera_ready_submitions/',validators=[FileExtensionValidator( ['pdf'] )],null=True,blank=True)
     camera_ready_submition_status=models.CharField(max_length=50,default='active')
+    chair_co_chair_remark=models.TextField(max_length=1000,null=True,blank=True)
+    
+    admin_remark=models.TextField(max_length=1000,null=True,blank=True)
 
 class ContextSubmition(models.Model):
     userid=models.ForeignKey(User,on_delete=models.CASCADE)
@@ -95,6 +106,9 @@ class ContextSubmition(models.Model):
     remark=models.TextField(max_length=1000,null=True,blank=True)
     camera_ready_submition=models.FileField(upload_to='camera_ready_submitions/',validators=[FileExtensionValidator( ['pdf'] )],null=True,blank=True)
     camera_ready_submition_status=models.CharField(max_length=50,default='active')
+    chair_co_chair_remark=models.TextField(max_length=1000,null=True,blank=True)
+    
+    admin_remark=models.TextField(max_length=1000,null=True,blank=True)
 
 class Privillage(models.Model):
     userid=models.ForeignKey(User,on_delete=models.CASCADE)
@@ -102,6 +116,8 @@ class Privillage(models.Model):
     is_author=models.BooleanField(default=False)
     is_reviewer=models.BooleanField(default=False)
     is_admin=models.BooleanField(default=False)
+    chair=models.BooleanField(default=False)
+    co_chair=models.BooleanField(default=False)
 
     
 

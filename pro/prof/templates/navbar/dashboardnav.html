@@ -53,6 +53,8 @@
            {% elif request.path == "/admin_reviewer_poster" %} style="top: 180px;"
             {% elif request.path == "/admin_add_reviewer/" %} style="top: 240px;" 
            {% elif request.path == "/admin_reviewer_context/" %} style="top: 300px;" 
+           {% elif request.path == "/admin_add_chair_and_cochair" %} style="top: 360px;" 
+           {% elif request.path == "/admin_registered_user" %} style="top: 420px;" 
             {% else %} style="    background-color: #3650d400;;"
             {% endif %}></div>
         {% if previllage.is_reviewer %}
@@ -183,12 +185,30 @@
         </li> 
 
         <li class="tooltip-element" data-tooltip="5">
-          <a href="{% url 'admin_reviewer_context' %}" {% if request.path == "/admin_reviewer_context/" %} class="active" {% endif %} data-active="3">
+          <a href="{% url 'admin_reviewer_context' %}" {% if request.path == "/admin_reviewer_context/" %} class="active" {% endif %} data-active="5">
               <div class="icon">
                   <i class='bx bx-notepad'></i>
                   <i class='bx bxs-notepad'></i>
                 </div>
             <span class="link hide">Reviewer context</span>
+          </a>
+        </li> 
+        <li class="tooltip-element" data-tooltip="6">
+          <a href="{% url 'admin_add_chair_and_cochair' %}" {% if request.path == "/admin_add_chair_and_cochair" %} class="active" {% endif %} data-active="6">
+              <div class="icon">
+                  <i class='bx bx-notepad'></i>
+                  <i class='bx bxs-notepad'></i>
+                </div>
+            <span class="link hide">Chair and Co Chair</span>
+          </a>
+        </li> 
+        <li class="tooltip-element" data-tooltip="7">
+          <a href="{% url 'admin_registered_user' %}" {% if request.path == "/admin_registered_user" %} class="active" {% endif %} data-active="7">
+              <div class="icon">
+                  <i class='bx bx-notepad'></i>
+                  <i class='bx bxs-notepad'></i>
+                </div>
+            <span class="link hide">Registered Users</span>
           </a>
         </li> 
         <div class="tooltip">
@@ -198,6 +218,8 @@
           <span>Reviewer Poster</span>
           <span>Reviewer</span>
           <span>Reviewer context</span>
+          <span>Chair and Co Chair</span>
+          <span>Registered Users</span>
         </div>
         {% endif %}
         

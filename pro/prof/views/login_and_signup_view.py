@@ -59,7 +59,11 @@ def loginpage(request):
                     return redirect("reviewertable")
                 elif previllage.is_admin:
                     return redirect("admin_page")
-                else:
+                elif previllage.chair:
+                    return redirect("chair_view")
+                elif previllage.co_chair:
+                    return redirect("cochair_view")
+                elif previllage.participant:
                     return redirect("dashboard")
         except Exception as e:
             return HttpResponse("something went wrong")
@@ -82,7 +86,7 @@ def register(request):
                 to_email = form.cleaned_data.get("email")
                 print(username,to_email)
                 if User.objects.filter(username=username).first():
-                    messages.success(request, "username taken")
+                    messages.success(request, "username already taken")
                     return redirect("/register")
                 if User.objects.filter(email=to_email).first():
                     messages.success(request, "email taken.")
@@ -100,14 +104,15 @@ def register(request):
                 message = f"hi press the link to verify http://127.0.0.1:8000/verify/{uid}"
                 
                 sent_mail_from(to_email,subject,message)
-                messages.success(request, "email has sent.")
-                return redirect("/register")
+                messages.success(request, " verification email has sent successfully. open the mail and click the link for confirmation.")
+                return redirect("/register") 
                 # login(request, user)
                 # return redirect('register2')
             except Exception as e:
                 return HttpResponse("something went wrong")
         else:
-            messages.error(request, form.error_messages)
+            
+            messages.error(request,form.error_messages)
     context = {"form": form}
     return render(request, "base/registration.html", context)
 
@@ -144,7 +149,8 @@ def register2(request):
             privillage.userid = request.user
             privillage.participant = True
             privillage.save()
-            return redirect("dashboard")
+            messages.success(request, "Request Submit Successfully ")
+            return redirect("/dashboard")
 
     return render(request, "base/registration2.html", {"form2": form2})
 

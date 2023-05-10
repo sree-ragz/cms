@@ -1,0 +1,93 @@
+{% extends 'navbar/dashboardnav.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="container">
+
+
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+          <tr style="background-color:#585960; color:white ;">
+            <th scope="col">User Name</th>
+            <th scope="col">Poster Id</th>
+            <th scope="col">Event Name</th>
+            <th scope="col">Poster Name</th>
+            <th scope="col">Resubmition Status</th>
+            <th scope="col"  > From Date</th>
+            
+            <th scope="col"  > To Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">CRP Status</th>
+
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+
+            {% for details in poster %}
+          <tr>
+            <th scope="row">{{details.userid}}</th>
+            <td>{{details.pk}}</td>
+            <td>{{details.event.title}}</td>
+            <td>{{details.postername}}</td>
+            <td>{% if details.submit_count == 1 %}Resubmitted{% else %}Reviewed/pending{% endif %}</td>
+            <td>{{details.event.from_date}}</td>
+            <td>{{details.event.to_date}}</td>
+            <td>
+                {% if details.status == 'pending' %}
+                
+                <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+                {% elif details.status == 'accepted' %}
+              <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+                {% elif details.status == 'declined' %}
+              <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+              {% endif %}
+            </td>
+
+            {% if details.status == 'accepted' %}
+            <td>
+              {% if details.camera_ready_submition_status == 'pending' %}
+              
+              <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+              {% elif details.camera_ready_submition_status == 'accepted' %}
+            <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+              {% elif details.camera_ready_submition_status == 'declined' %}
+            <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+            {% elif details.camera_ready_submition_status == 'active' %}
+            <span style=" border-radius: 3px;" class="btn btn-info text-white ">Active</span>
+            {% endif %}
+          </td>
+          {% else %}
+          <td></td>
+          {% endif %}
+            
+            <td><a href="{% url 'chair_poster_details' details.pk %}">details</a></td>
+            
+            
+            
+          </tr>
+          {% endfor %}
+          
+          
+        </tbody>
+      </table>
+      </div>
+
+
+    </div>
+
+<style>
+    .table{
+      border-radius: 5px;
+      overflow: hidden;
+      border-color: black;
+
+    }
+  </style>
+  </div>
+{% endblock %}

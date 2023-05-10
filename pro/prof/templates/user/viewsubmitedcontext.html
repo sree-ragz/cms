@@ -76,9 +76,23 @@
 
                 </div>
 
-                <div class="col-md-12"><label class="labels">Remark</label>
-                  <textarea readonly class="form-control" name="remark" id="" cols="30" rows="5">{{context.remark}}</textarea>
-                  </div> <br>
+                {% if context.remark != None %}
+                <div class="col-md-12"><label class="labels">Reviewer Remark</label>
+                  <textarea readonly class="form-control"  id="" cols="30" rows="5">{{context.remark}}</textarea>
+                  </div>
+                  {% endif %} 
+
+                  <br>
+                  {% if context.chair_co_chair_remark != None %}
+                  <div class="col-md-12"><label class="labels">chair / co chair Remark</label>
+                    <textarea readonly class="form-control" id="" cols="30" rows="5">{{context.chair_co_chair_remark}}</textarea>
+                    </div> 
+                    {% endif %} <br>
+                    {% if context.admin_remark != None %}
+                    <div class="col-md-12"><label class="labels">admin Remark</label>
+                      <textarea readonly class="form-control"  id="" cols="30" rows="5">{{context.admin_remark}}</textarea>
+                      </div> 
+                      {% endif %}<br>
                   {% if context.remark == "" and context.status == 'pending' %}
                    <div class="text-center"><button type="button" class="btn btn-primary btn-lg  mt-5 w-75" data-bs-toggle="modal" data-bs-target="#Postersubmition">
                     Re upload Context

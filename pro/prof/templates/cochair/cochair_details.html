@@ -1,0 +1,273 @@
+{% extends 'navbar/dashboardnav.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+<div class="col-md-12">
+        <div class="card mb-3">
+            <div class="row no-gutters">
+              <div class="col-md-6">
+                <img src="{% static event.event_image.url %}" class="card-img " alt="... ">
+              </div>
+              <div class="col-md-6">
+                <div class="card-body">
+                  
+                  <h5 class="card-title">{{event.title}}</h5>
+                      <p class="card-text"><span style="font-weight: bold;">TOPIC:&nbsp;</span>{{event.topic}}
+                        
+
+
+                      </p>
+                      <p class="card-text"><span style="font-weight: bold;">DESCRIPTION:&nbsp;</span>{{event.description}}
+
+                        
+                       
+                            </span> 
+
+
+                      </p>
+                      <p class="card-text"><span style="font-weight: bold;">Paper:&nbsp;</span>{{event.paper_submited}}
+
+                        
+                       
+                      </span> 
+
+
+                </p>
+                <p class="card-text"><span style="font-weight: bold;">Poster:&nbsp;</span>{{event.poster_submited}}
+
+                        
+                       
+                </span> 
+
+
+          </p>
+          <p class="card-text"><span style="font-weight: bold;">Context:&nbsp;</span>{{event.context}}
+
+                        
+                       
+          </span> 
+
+
+    </p>
+
+                  <div class="d-flex flex-row">
+                    <div>
+
+                        <ion-icon  name="calendar"></ion-icon>
+                    </div>
+                    <div><p>:{{event.from_date}}-{{event.to_date}}</p></div>
+                  </div>
+                  <div class="d-flex flex-row">
+                    <div>
+
+                        <ion-icon name="location"></ion-icon>
+                    </div>
+                    <div><p>:{{event.venue}}</p></div>
+                  </div>
+
+                  <div class="d-flex flex-row">
+                    <div>
+
+                        <ion-icon name="pricetags"></ion-icon>
+                    </div>
+                    <div><p>:{{event.registration_fees}}</p></div>
+                  </div>
+
+
+                  <div>
+
+
+                  
+              
+                       
+                        <a style="cursor: pointer;" class="" data-bs-toggle="modal" data-bs-target="#editevent{{event.id}}"> <span data-bs-toggle="tooltip" data-bs-placement="top" title="edit"><ion-icon   style="font-size: 22px; color: orange;pointer-events: none;" name="pencil"></ion-icon> </span></a>
+          
+                         <div class="modal fade" id="editevent{{event.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                          <div class="modal-content">
+                          <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Edit Event</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                          <div class="myform ">
+                            <h1 class="text-center">Edit Event</h1>
+                            <form action="/cochair_edit_event/{{event.id}}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="name">Event Name</label>
+                                    <input name="title" value="{{event.title}}" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+                                  </div>
+                          
+                          
+                          
+                          
+                                  <div class="form-group mt-3">
+                                    <label for="num">Description</label>
+                                    
+                                    <textarea name="description" id="" cols="30" rows="7" class="form-control">{{event.description}}</textarea>
+                                  </div>
+                          
+                                  
+                                  <div class="form-group mt-3">
+                                    <label for="photo">FromDate</label>
+                                    
+                                    <input  type="date" name="from_date" id="" value="{{ event.from_date|date:'Y-m-d'}}">
+                                    
+                                    <label for="photo">ToDate</label> 
+                                    <input  type="date" name="to_date" id="" value="{{ event.to_date|date:'Y-m-d'}}">
+                                   
+                                    
+                                  </div>
+                                
+                        
+                                  <label for="photo">Targetted Audience:</label>
+                                  <div class="form-group mt-3 text-center">
+                                   
+                                    {{form.targetted_audience}}
+                                    
+                        
+                                  </div>
+                                  <p><span style="color: red;">*</span> Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>
+                                  <div class="form-group mt-3">
+                                    <label for="photo">Topic</label>
+                                    <input value="{{event.topic}}" name="topic" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+                                    
+                                  </div>
+          
+                                  <div class="form-group mt-3">
+                                    <label for="photo">gender_specific</label>
+                                    {{form.gender_specific}}
+                                    
+                                    
+                                  </div>
+          
+                                  <div class="form-group mt-3">
+                                    <label for="photo">Venue</label>
+                                    <input value="{{event.venue}}" name="venue" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+                                    
+                                  </div>
+                                  <div class="form-group mt-3">
+                                    <label for="photo">Registration Fees</label>
+                                    <input value="{{event.registration_fees}}" name="registration_fees" type="number" class="form-control" id="name" aria-describedby="emailHelp">
+                                    
+                                  </div>
+                                  <div class="form-group mt-3">
+                                    <a href="{% static event.event_image.url %}">Current image</a><br>
+                                    <label for="photo">Event Image</label>
+                                
+                                    <input  name="event_image" type="file" class="form-control" id="name" aria-describedby="emailHelp" value="">
+                                  </div>
+                                  <div class="form-group mt-3">
+                                    <input name="paper_submited" value="True" type="checkbox" {% if event.paper_submited %}checked{% endif %}>
+                                    <label for="photo">Papersubmition</label>
+                                    
+                                    
+                                  </div>
+                                  <div class="form-group mt-3">
+                                    <input name="poster_submited" value="True" type="checkbox" {% if event.poster_submited %}checked{% endif %}>
+                                    <label for="photo">Postersubmition</label>
+                                    
+                                    
+                                  </div>
+                                  <div class="form-group mt-3">
+                                    <input name="context" value="True" type="checkbox" {% if event.context %}checked{% endif %}>
+                                    <label for="photo">Postersubmition</label>
+                                    
+                                    
+                                  </div>
+                                  
+                                  
+                          
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-info">Save changes</button>
+                                     
+                                    
+                                  </div>
+                            </form>
+                          </div>
+                          </div>
+                          
+                          </div>
+                          </div>
+                          </div>
+                      
+                         
+                      
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+</div>
+    </div>
+
+
+
+    <div class="row">
+
+
+        <div class="col-md-12">
+
+            <table class="table table-hover">
+                <thead>
+                  <tr style="background-color:#585960; color:white ;">
+                    <th scope="col">Total No: Of Registration &nbsp;&nbsp;&nbsp; <a href="{% url 'cochair_registered_users' event.id %}" ><span data-bs-toggle="tooltip" data-bs-placement="top" title="view"><ion-icon style="font-size: 22px;color: rgb(0, 11, 128); pointer-events: none;" name="eye"></ion-icon></span></a></th>
+                    <th scope="col">Total No: of Paper &nbsp;&nbsp;&nbsp; <a href="{% url 'cochair_paper' event.id %}" ><span data-bs-toggle="tooltip" data-bs-placement="top" title="view"><ion-icon style="font-size: 22px;color: rgb(0, 11, 128); pointer-events: none;" name="eye"></ion-icon></span></a></th>
+                    <th scope="col">Total No: of Poster &nbsp;&nbsp;&nbsp; <a href="{% url 'cochair_poster' event.id %}" ><span data-bs-toggle="tooltip" data-bs-placement="top" title="view"><ion-icon style="font-size: 22px;color: rgb(0, 11, 128); pointer-events: none;" name="eye"></ion-icon></span></a></th>
+                    <th scope="col">Total No: of Context &nbsp;&nbsp;&nbsp; <a href="{% url 'cochair_context' event.id %}" ><span data-bs-toggle="tooltip" data-bs-placement="top" title="view"><ion-icon style="font-size: 22px;color: rgb(0, 11, 128); pointer-events: none;" name="eye"></ion-icon></span></a></th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+        
+                    
+                  <tr>
+                    <th scope="row">{{total_registered.count}} 
+                        
+                    <td>{{total_paper.count}}</td>
+                    <td>{{total_poster.count}}</td>
+                    <td>{{total_context.count}}</td>
+                    
+                    
+                  </tr>
+                  
+                  
+                  
+                </tbody>
+              </table>
+
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .table{
+      border-radius: 5px;
+      overflow: hidden;
+      border-color: black;
+
+    }
+  </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
