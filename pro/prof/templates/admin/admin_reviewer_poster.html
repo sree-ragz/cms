@@ -227,6 +227,7 @@
                       
 
                   </div>
+                  {% if event.postername.camera_ready_submition_status != 'active' %}
                   <div class="d-flex justify-content-center mt-5"><select name="camera_ready_submition_status" class="form-select w-50" aria-label="Default select example">
                     <option class="" value="pending" {% if event.postername.camera_ready_submition_status == 'pending' %} selected {% endif %}>Pending</option>
                     
@@ -246,6 +247,7 @@
                             <a href="{{ event.postername.camera_ready_submition.url }}" class="btn btn-primary mt-3">Preview</a>
 
                   </div>
+                  {% endif %}
 
                   <div   class="mt-5 text-center">
                     <div class="form-floating">

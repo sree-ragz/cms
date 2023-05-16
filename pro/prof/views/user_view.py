@@ -20,21 +20,44 @@ from datetime import date
 
 
 from prof.views.sent_mail import sent_mail_from
+#this code defines a view function for rendering the dashboard page.
+#  It retrieves all events from the Event model and prints them (possibly for debugging purposes). 
+# It then gets the current user and their privilege by filtering the Privillage model. Next,
+#  it retrieves the participant object for the current user. Finally, 
+# it renders the dashboard.html template with the events, participant object, privilege, and the current date.
+
 
 
 def dashboard(request):
+    # Retrieve all events
     events = Event.objects.all()
     print(events)
+
+    # Get the current user and their privilege
     user = request.user
     previllage = Privillage.objects.filter(userid=request.user).first()
 
+    # Retrieve the participant object for the current user
     participant_obj = Participant.objects.filter(user=user).first()
 
     return render(
         request,
         "user/dashboard.html",
-        {"event": events, "participant": participant_obj, "previllage": previllage,"today": date.today()},
+        {
+            "event": events,
+            "participant": participant_obj,
+            "previllage": previllage,
+            "today": date.today(),
+        },
     )
+
+# this code defines a view function for handling event registration. 
+# If the user is authenticated, it retrieves the privilege object and the User_Event object for the current user and event.
+#  It also retrieves the event object and creates the paper and poster submission forms.
+#  If a POST request is received, it processes the paper and poster submission forms, updates privilege and user_event objects, saves the submission objects, and sends email notifications to the user.
+#  Finally, it renders the eventregistration.html template with the necessary data. If the user is not authenticated, 
+# it redirects them to the login page.
+
 
 
 def eventregistration(request, event_id):
@@ -144,15 +167,22 @@ def eventregistration(request, event_id):
     else:
         return redirect("login")
 
-
+#this code registers the current user as a participant for a specific event.
+#  It retrieves the event object and the User_Event object for the current user and event.
+#  If the User_Event object doesn't exist, a new object is created and saved with the corresponding event and user IDs.
+# If the User_Event object already exists, it is updated to set the paper and poster fields to False.
+#  An email notification is sent to the user to confirm their successful registration.
+#  Finally, the user is redirected to the event registration page for the specified event.
 def register_as_participant(request, event_id):
+    # Retrieve the event object
     events = Event.objects.get(pk=event_id)
-    user_events = User_Event.objects.filter(
-        event_id=event_id, user_id=request.user
-    ).first()
+
+    # Retrieve the User_Event object for the current user and event
+    user_events = User_Event.objects.filter(event_id=event_id, user_id=request.user).first()
     print(user_events)
 
     if user_events is None:
+        # Create a new User_Event object if it doesn't exist
         user_event = User_Event()
         user_event.event_id = events
         user_event.user_id = request.user
@@ -160,14 +190,26 @@ def register_as_participant(request, event_id):
         user_event.poster = False
         user_event.save()
     else:
+        # Update the existing User_Event object
         user_events.paper = False
         user_events.poster = False
         user_events.save()
-    to_email=user_event.user_id.email
-    subject = "your are successfully registered as a participant"
-    message = f"your are successfully registered as a participant for {events.title}"
-    sent_mail_from(to_email,subject,message)
+
+    # Send email notification to the user
+    to_email = user_event.user_id.email
+    subject = "You are successfully registered as a participant"
+    message = f"You are successfully registered as a participant for {events.title}"
+    sent_mail_from(to_email, subject, message)
+
     return redirect("eventregistration", event_id)
+
+
+# this code handles the user's context registration for a specific event.
+#  It first checks if the request method is POST. Then, it retrieves the event object.
+#  The code creates an instance of the ContextSubmitionForm using the request data. 
+# If the form is valid, it updates the user's privileges and event participation, saves the context submission,
+#  and sends an email notification to the user. 
+# Finally, the user is redirected to the event registration page for the specified event.
 
 
 def user_context_registration(request,event_id):
@@ -216,7 +258,7 @@ def user_context_registration(request,event_id):
         return redirect("eventregistration", event_id)
         
 
-    
+   # this function is to edit the users profile 
 
 def Editprofile(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
@@ -251,7 +293,7 @@ def Editprofile(request):
         },
     )
 
-
+# this fuction is to view the registered events 
 def registeredevents(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
 
@@ -262,7 +304,7 @@ def registeredevents(request):
         request, "user/registeredevents.html", {"event": userevent, "previllage": previllage}
     )
 
-
+#this function is to render the status of submitted paper
 def submitedpaper(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     paper = PaperSubmition.objects.filter(userid=request.user).all()
@@ -271,7 +313,7 @@ def submitedpaper(request):
         request, "user/submitedpaper.html", {"paper": paper, "previllage": previllage}
     )
 
-
+#this function is to render the status of submitted poster
 def submitedposter(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     poster = PosterSubmition.objects.filter(userid=request.user).all()
@@ -279,7 +321,7 @@ def submitedposter(request):
     return render(
         request, "user/submitedposter.html", {"poster": poster, "previllage": previllage}
     )
-
+#this function is to render the status of submitted context
 def submitedcontext(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     context = ContextSubmition.objects.filter(userid=request.user).all()
@@ -288,7 +330,7 @@ def submitedcontext(request):
         request, "user/submitedcontext.html", {"context": context, "previllage": previllage}
     )
 
-
+#this function is to view the details of submitted paper
 def viewsubmitedpaper(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
     paper = PaperSubmition.objects.filter(id=id).first()
@@ -357,7 +399,7 @@ def camera_ready_context_submition(request,id):
             message = f"your are successfully submitted camera ready context for {camera_ready_context.event.title}"
             sent_mail_from(to_email,subject,message)
             return redirect('viewsubmitedcontext',id)
-
+#this function is to view the details of submitted poster
 def viewsubmitedposter(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
     poster = PosterSubmition.objects.filter(id=id).first()
@@ -375,7 +417,7 @@ def viewsubmitedposter(request, id):
         "user/viewsubmitedposter.html",
         {"poster": poster, "form": form, "previllage": previllage},
     )
-
+#this function is to view the details of submitted context
 def viewsubmitedcontext(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
     context = ContextSubmition.objects.filter(id=id).first()

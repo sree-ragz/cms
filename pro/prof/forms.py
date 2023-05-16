@@ -79,7 +79,12 @@ class CameraReadyContextSubmitionForm(ModelForm):
 class EditPosterSubmitionFormReviewer(ModelForm):
     class Meta:
         model=PosterSubmition
-        fields=['status','posterremark','camera_ready_submition_status','admin_remark']
+        fields=['status','posterremark']
+
+class EditPosterSubmitionFormAdmin(ModelForm):
+    class Meta:
+        model=PaperSubmition
+        fields=['status','camera_ready_submition_status','admin_remark']
 class EditCameraReadyPaperSubmitionFormReviewer(ModelForm):
     class Meta:
         model=PaperSubmition
@@ -92,11 +97,16 @@ class EditCameraReadyContextSubmitionFormReviewer(ModelForm):
     class Meta:
         model=ContextSubmition
         fields=['camera_ready_submition_status']
-class EditPaperrSubmitionFormReviewer(ModelForm):
+class EditPaperSubmitionFormReviewer(ModelForm):
     class Meta:
         model=PaperSubmition
         fields=['status','remark']
-class EditPaperrSubmitionFormAdmin(ModelForm):
+class EditPaperSubmitionFormAdmin(ModelForm):
+    class Meta:
+        model=PaperSubmition
+        fields=['status','camera_ready_submition_status','admin_remark']
+        
+class EditContextSubmitionFormAdmin(ModelForm):
     class Meta:
         model=PaperSubmition
         fields=['status','camera_ready_submition_status','admin_remark']
@@ -104,7 +114,7 @@ class EditPaperrSubmitionFormAdmin(ModelForm):
 class EditContextSubmitionFormReviewer(ModelForm):
     class Meta:
         model=ContextSubmition
-        fields=['status','remark','camera_ready_submition_status','admin_remark']
+        fields=['status','remark']
 
 
 

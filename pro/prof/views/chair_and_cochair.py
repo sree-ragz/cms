@@ -25,15 +25,16 @@ from prof.views.sent_mail import sent_mail_from
 
 def chair_view(request):
     chair=Event.objects.filter(chair_id=request.user).all()
-    
+    previllage=Privillage.objects.filter(userid=request.user).first()
     print(chair)
     
 
-    return render(request,'chair/chair_view.html',{"chair":chair})
+    return render(request,'chair/chair_view.html',{"chair":chair, "previllage":previllage,"s":False})
 
 
 
 def chair_details(request,id):
+    previllage=Privillage.objects.filter(userid=request.user).first()
     event=Event.objects.filter(id=id).first()
     addform = AdminAddorEditEvent()
     chair=Privillage.objects.filter(chair=True).all()
@@ -49,7 +50,8 @@ def chair_details(request,id):
     return render(request,'chair/chair_details.html',
                   {"event":event,"form":addform,"chair":chair,"cochair":cochair,
                    "total_registered":total_registered,"total_paper":total_paper,
-                   "total_poster":total_poster,"total_context": total_context
+                   "total_poster":total_poster,"total_context": total_context,
+                   "previllage":previllage
                    
                                                       })
 
@@ -67,27 +69,30 @@ def chair_edit_event(request, id):
 
 
 def registered_users(request,id):
+    event=Event.objects.filter(id=id).first()
     total_registered=User_Event.objects.filter(event_id=id).all()
-    
+    previllage=Privillage.objects.filter(userid=request.user).first()
 
     
-    return render(request,"chair/registered_users.html",{"total_registered":total_registered})
+    return render(request,"chair/registered_users.html",{"total_registered":total_registered,"previllage":previllage,"event":event})
 
 
 def chair_paper(request,id):
     paper=PaperSubmition.objects.filter(event=id).all()
+    event=Event.objects.filter(id=id).first()
+    previllage=Privillage.objects.filter(userid=request.user).first()
 
-
-    return render(request,'chair/paper.html',{"paper":paper})
+    
+    return render(request,'chair/paper.html',{"paper":paper,"event":event,"previllage":previllage})
 
 
 
 def chair_paper_details(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
     paper = PaperSubmition.objects.filter(id=id).first()
-   
+    event=Event.objects.filter(id=id).first()
     form = EditPaperrSubmitionFormReviewer(instance=paper)
-
+    print(event)
     if request.method == "POST":     
         form = EditPaperrSubmitionFormReviewer(
             request.POST, request.FILES, instance=paper
@@ -114,7 +119,7 @@ def chair_paper_details(request, id):
     return render(
         request,
         "chair/paper_details.html",
-        {"obj": paper, "form": form, "previllage": previllage},
+        {"obj": paper,"form":form,"previllage":previllage,"event":event}
     )
 
 
@@ -146,14 +151,16 @@ def chair_camera_ready_paper(request,id):
 
 def chair_poster(request,id):
     poster=PosterSubmition.objects.filter(event=id).all()
+    event=Event.objects.filter(id=id).first()
+    previllage=Privillage.objects.filter(userid=request.user).first()
 
 
-    return render(request,'chair/poster.html',{"poster":poster})
+    return render(request,'chair/poster.html',{"poster":poster,"event":event,"previllage":previllage})
 
 def chair_poster_details(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
     poster = PosterSubmition.objects.filter(id=id).first()
-    
+    event=Event.objects.filter(id=id).first()
     form = EditPosterSubmitionFormReviewer(instance=poster)
 
     if request.method == "POST":
@@ -182,7 +189,7 @@ def chair_poster_details(request, id):
     return render(
         request,
         "chair/poster_details.html",
-        {"obj": poster, "form": form, "previllage": previllage},
+        {"obj": poster, "form": form,"previllage":previllage,}
     )
 
 

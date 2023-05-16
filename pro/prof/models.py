@@ -45,7 +45,7 @@ class Event(models.Model):
         ('all','all')
     )
     title=models.CharField(max_length=200)
-    description=models.TextField(max_length=500)
+    description=models.TextField(max_length=5000)
     from_date=models.DateField()
     to_date=models.DateField()
     targetted_audience=models.ManyToManyField(ParticipantType)
