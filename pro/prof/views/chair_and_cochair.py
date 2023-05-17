@@ -68,13 +68,19 @@ def chair_edit_event(request, id):
     return redirect("chair_details",id)
 
 
-def registered_users(request,id):
-    event=Event.objects.filter(id=id).first()
-    total_registered=User_Event.objects.filter(event_id=id).all()
+def registered_users(request):
+    event=Event.objects.filter(chair_id=request.user).all()
+    print(event)
+    tr=[]
+    for i in event:
+
+        total_registered=User_Event.objects.filter(event_id=i.pk).all()
+        tr+=total_registered
+
     previllage=Privillage.objects.filter(userid=request.user).first()
 
-    
-    return render(request,"chair/registered_users.html",{"total_registered":total_registered,"previllage":previllage,"event":event})
+    print(tr)
+    return render(request,"chair/registered_users.html",{"total_registered":tr,"previllage":previllage,"event":event})
 
 
 def chair_paper(request,id):
@@ -91,10 +97,10 @@ def chair_paper_details(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
     paper = PaperSubmition.objects.filter(id=id).first()
     event=Event.objects.filter(id=id).first()
-    form = EditPaperrSubmitionFormReviewer(instance=paper)
+    form = EditPaperSubmitionFormReviewer(instance=paper)
     print(event)
     if request.method == "POST":     
-        form = EditPaperrSubmitionFormReviewer(
+        form = EditPaperSubmitionFormReviewer(
             request.POST, request.FILES, instance=paper
         )
         if form.is_valid():
@@ -348,10 +354,10 @@ def co_chair_paper_details(request, id):
     paper = PaperSubmition.objects.filter(id=id).first()
     print(paper.event)
 
-    form = EditPaperrSubmitionFormReviewer(instance=paper)
+    form = EditPaperSubmitionFormReviewer(instance=paper)
 
     if request.method == "POST":     
-        form = EditPaperrSubmitionFormReviewer(
+        form = EditPaperSubmitionFormReviewer(
             request.POST, request.FILES, instance=paper
         )
         if form.is_valid():
