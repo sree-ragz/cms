@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"); */
 
 *,
 *::before,
@@ -14,9 +14,10 @@
   --main-color-light: #5872f5;
   --text-color: #cfcde7;
 }
-
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Baloo 2",cursive;
+    font-size: 16px;
   overflow-x: hidden;
   background-color: #e4e2f5;
   min-height: 100vh;

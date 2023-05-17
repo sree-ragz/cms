@@ -287,7 +287,7 @@ def Editprofile(request):
         {
             "form": form,
             "participant_obj": participant_obj,
-            
+            "participant": participant_obj,
             
             "previllage": previllage,
         },
@@ -296,38 +296,45 @@ def Editprofile(request):
 # this fuction is to view the registered events 
 def registeredevents(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
+    participant_obj = Participant.objects.filter(user=request.user).first()
 
     userevent = User_Event.objects.filter(user_id=request.user).all()
     print(userevent)
 
     return render(
-        request, "user/registeredevents.html", {"event": userevent, "previllage": previllage}
+        request, "user/registeredevents.html", {"event": userevent, "previllage": previllage,"participant": participant_obj}
     )
 
 #this function is to render the status of submitted paper
 def submitedpaper(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     paper = PaperSubmition.objects.filter(userid=request.user).all()
+    participant_obj = Participant.objects.filter(user=request.user).first()
+
 
     return render(
-        request, "user/submitedpaper.html", {"paper": paper, "previllage": previllage}
+        request, "user/submitedpaper.html", {"paper": paper, "previllage": previllage,"participant": participant_obj}
     )
 
 #this function is to render the status of submitted poster
 def submitedposter(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     poster = PosterSubmition.objects.filter(userid=request.user).all()
+    participant_obj = Participant.objects.filter(user=request.user).first()
+
 
     return render(
-        request, "user/submitedposter.html", {"poster": poster, "previllage": previllage}
+        request, "user/submitedposter.html", {"poster": poster, "previllage": previllage,"participant": participant_obj,}
     )
 #this function is to render the status of submitted context
 def submitedcontext(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     context = ContextSubmition.objects.filter(userid=request.user).all()
+    participant_obj = Participant.objects.filter(user=request.user).first()
+
 
     return render(
-        request, "user/submitedcontext.html", {"context": context, "previllage": previllage}
+        request, "user/submitedcontext.html", {"context": context, "previllage": previllage,"participant": participant_obj}
     )
 
 #this function is to view the details of submitted paper

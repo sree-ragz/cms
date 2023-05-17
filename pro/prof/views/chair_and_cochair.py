@@ -29,7 +29,7 @@ def chair_view(request):
     print(chair)
     
 
-    return render(request,'chair/chair_view.html',{"chair":chair, "previllage":previllage,"s":False})
+    return render(request,'chair/chair_view.html',{"chair":chair,"previllage":previllage,"s":False})
 
 
 
@@ -83,13 +83,17 @@ def registered_users(request):
     return render(request,"chair/registered_users.html",{"total_registered":tr,"previllage":previllage,"event":event})
 
 
-def chair_paper(request,id):
-    paper=PaperSubmition.objects.filter(event=id).all()
-    event=Event.objects.filter(id=id).first()
+def chair_paper(request):
+    event=Event.objects.filter(chair_id=request.user).all()
+    p=[]
+    for i in event:
+     paper=PaperSubmition.objects.filter(event=i.pk).all()
+     p+=paper
+    
     previllage=Privillage.objects.filter(userid=request.user).first()
 
     
-    return render(request,'chair/paper.html',{"paper":paper,"event":event,"previllage":previllage})
+    return render(request,'chair/paper.html',{"paper":p,"event":event,"previllage":previllage})
 
 
 
@@ -155,13 +159,16 @@ def chair_camera_ready_paper(request,id):
 
 
 
-def chair_poster(request,id):
-    poster=PosterSubmition.objects.filter(event=id).all()
-    event=Event.objects.filter(id=id).first()
+def chair_poster(request):
+    event=Event.objects.filter(chair_id=request.user).all()
+    p=[]
+    for i in event:
+     poster=PosterSubmition.objects.filter(event=i.pk).all()
+     p+=poster
     previllage=Privillage.objects.filter(userid=request.user).first()
 
 
-    return render(request,'chair/poster.html',{"poster":poster,"event":event,"previllage":previllage})
+    return render(request,'chair/poster.html',{"poster":p,"event":event,"previllage":previllage})
 
 def chair_poster_details(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
@@ -223,11 +230,16 @@ def chair_camera_ready_poster(request,id):
         
 
 
-def chair_context(request,id):
-    context=ContextSubmition.objects.filter(event=id).all()
+def chair_context(request):
+    event=Event.objects.filter(chair_id=request.user).all()
+    p=[]
+    for i in event:
+     context=ContextSubmition.objects.filter(event=i.pk).all()
+     p+=context
+    previllage=Privillage.objects.filter(userid=request.user).first()
 
 
-    return render(request,'chair/context.html',{"context": context})
+    return render(request,'chair/context.html',{"context":p,"previllage":previllage})
 
 
 
@@ -294,10 +306,10 @@ def chair_camera_ready_context(request,id):
 def co_chair_view(request):
     cochair=Event.objects.filter(co_chair_id=request.user).all()
     
-    
+    previllage=Privillage.objects.filter(userid=request.user).first()
     
 
-    return render(request,'cochair/cochair_view.html',{"cochair":cochair})
+    return render(request,'cochair/cochair_view.html',{"cochair":cochair,"previllage":previllage})
 
 
 
@@ -333,19 +345,34 @@ def co_chair_edit_event(request, id):
     return redirect("cochair_details",id)
 
 
-def cochair_registered_users(request,id):
-    total_registered=User_Event.objects.filter(event_id=id).all()
-    
+def cochair_registered_users(request):
+    event=Event.objects.filter(co_chair_id=request.user).all()
+    print(event)
+    tr=[]
+    for i in event:
+
+        total_registered=User_Event.objects.filter(event_id=i.pk).all()
+        tr+=total_registered
+
+    previllage=Privillage.objects.filter(userid=request.user).first()
 
     
-    return render(request,"cochair/registered_users.html",{"total_registered":total_registered})
+
+    
+    return render(request,"cochair/registered_users.html",{"total_registered":tr,"previllage":previllage})
 
 
-def co_chair_paper(request,id):
-    paper=PaperSubmition.objects.filter(event=id).all()
+def co_chair_paper(request):
+    event=Event.objects.filter(co_chair_id=request.user).all()
+    p=[]
+    for i in event:
+     paper=PaperSubmition.objects.filter(event=i.pk).all()
+     p+=paper
+    
+    previllage=Privillage.objects.filter(userid=request.user).first()
 
 
-    return render(request,'cochair/paper.html',{"paper":paper})
+    return render(request,'cochair/paper.html',{"paper":p,"previllage":previllage})
 
 
 
@@ -412,11 +439,16 @@ def co_chair_camera_ready_paper(request,id):
 
 
 
-def co_chair_poster(request,id):
-    poster=PosterSubmition.objects.filter(event=id).all()
+def co_chair_poster(request):
+    event=Event.objects.filter(co_chair_id=request.user).all()
+    p=[]
+    for i in event:
+     poster=PosterSubmition.objects.filter(event=i.pk).all()
+     p+=poster
+    previllage=Privillage.objects.filter(userid=request.user).first()
 
 
-    return render(request,'cochair/poster.html',{"poster":poster})
+    return render(request,'cochair/poster.html',{"poster":p,"previllage":previllage})
 
 def co_chair_poster_details(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
@@ -479,11 +511,16 @@ def co_chair_camera_ready_poster(request,id):
         
 
 
-def co_chair_context(request,id):
-    context=ContextSubmition.objects.filter(event=id).all()
+def co_chair_context(request):
+    event=Event.objects.filter(co_chair_id=request.user).all()
+    p=[]
+    for i in event:
+     context=ContextSubmition.objects.filter(event=i.pk).all()
+     p+=context
+    previllage=Privillage.objects.filter(userid=request.user).first()
 
 
-    return render(request,'cochair/cochair_context.html',{"context": context})
+    return render(request,'cochair/cochair_context.html',{"context":p,"previllage":previllage})
 
 
 
