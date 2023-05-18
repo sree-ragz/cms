@@ -52,7 +52,7 @@ def admin_page(request):
 #Overall, this code appears to be a view function for handling requests related to event administration. 
 # It retrieves privileges, events, participant types, and form data. 
 # It saves the form data if the request method is POST and renders the appropriate template with the necessary context.
-def admin_event_list(request, id=0):
+def admin_event_list(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     chair=Privillage.objects.filter(chair=True).all()
     cochair=Privillage.objects.filter(co_chair=True).all()
