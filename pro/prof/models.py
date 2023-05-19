@@ -135,7 +135,7 @@ class User_Event(models.Model):
     
 class Reviewer_Paper(models.Model):
     userid=models.ForeignKey(User,on_delete=models.CASCADE)
-    papername=models.ForeignKey(PaperSubmition,on_delete=models.CASCADE,unique=True)
+    papername=models.ForeignKey(PaperSubmition,on_delete=models.CASCADE)
 
 class Reviewer_Poster(models.Model):
     userid=models.ForeignKey(User,on_delete=models.CASCADE)

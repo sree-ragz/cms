@@ -49,7 +49,7 @@
             <td>{{event.contextname.event.registration_fees}}</td>
             <td>
               {% if event.contextname.status == 'pending' %}
-                            <span class="bg-warning rounded">Pending</span>
+                            <span class="bg-primary rounded">Pending</span>
                             {% elif event.contextname.status == 'accepted' %}
 
                             <span class="bg-success rounded">Accepted</span>
@@ -62,7 +62,7 @@
             <td>
               {% if event.contextname.camera_ready_submition_status == 'pending' %}
               
-              <span  class="bg-warning  rounded ">Pending</span>
+              <span  class="bg-primary rounded ">Pending</span>
               {% elif event.contextname.camera_ready_submition_status == 'accepted' %}
             <span class="bg-success rounded">Approved</span>
               {% elif event.contextname.camera_ready_submition_status == 'declined' %}

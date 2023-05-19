@@ -22,7 +22,8 @@ from datetime import date
 from prof.views.sent_mail import sent_mail_from
 
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def chair_view(request):
     chair=Event.objects.filter(chair_id=request.user).all()
     previllage=Privillage.objects.filter(userid=request.user).first()
@@ -32,7 +33,8 @@ def chair_view(request):
     return render(request,'chair/chair_view.html',{"chair":chair,"previllage":previllage,"s":False})
 
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def chair_details(request,id):
     previllage=Privillage.objects.filter(userid=request.user).first()
     event=Event.objects.filter(id=id).first()
@@ -55,7 +57,8 @@ def chair_details(request,id):
                    
                                                       })
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def chair_edit_event(request, id):
     if request.method == "POST":
         event = Event.objects.filter(id=id).first()
@@ -67,7 +70,8 @@ def chair_edit_event(request, id):
 
     return redirect("chair_details",id)
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def registered_users(request):
     event=Event.objects.filter(chair_id=request.user).all()
     print(event)
@@ -82,7 +86,8 @@ def registered_users(request):
     print(tr)
     return render(request,"chair/registered_users.html",{"total_registered":tr,"previllage":previllage,"event":event})
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def chair_paper(request):
     event=Event.objects.filter(chair_id=request.user).all()
     p=[]
@@ -96,7 +101,8 @@ def chair_paper(request):
     return render(request,'chair/paper.html',{"paper":p,"event":event,"previllage":previllage})
 
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def chair_paper_details(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
     paper = PaperSubmition.objects.filter(id=id).first()
@@ -132,7 +138,8 @@ def chair_paper_details(request, id):
         {"obj": paper,"form":form,"previllage":previllage,"event":event}
     )
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def chair_camera_ready_paper(request,id):
     
     camera_ready_paper=PaperSubmition.objects.filter(id=id).first()
@@ -158,7 +165,8 @@ def chair_camera_ready_paper(request,id):
         
 
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def chair_poster(request):
     event=Event.objects.filter(chair_id=request.user).all()
     p=[]
@@ -169,7 +177,8 @@ def chair_poster(request):
 
 
     return render(request,'chair/poster.html',{"poster":p,"event":event,"previllage":previllage})
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def chair_poster_details(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
     poster = PosterSubmition.objects.filter(id=id).first()
@@ -205,7 +214,8 @@ def chair_poster_details(request, id):
         {"obj": poster, "form": form,"previllage":previllage,}
     )
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def chair_camera_ready_poster(request,id):
     camera_ready_poster=PosterSubmition.objects.filter(id=id).first()
 
@@ -229,7 +239,8 @@ def chair_camera_ready_poster(request,id):
             return redirect('chair_poster',camera_ready_poster.event.id)
         
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def chair_context(request):
     event=Event.objects.filter(chair_id=request.user).all()
     p=[]
@@ -242,7 +253,8 @@ def chair_context(request):
     return render(request,'chair/context.html',{"context":p,"previllage":previllage})
 
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def chair_context_details(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
     context = ContextSubmition.objects.filter(id=id).first()
@@ -279,7 +291,8 @@ def chair_context_details(request, id):
     )
 
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['chair'])
 def chair_camera_ready_context(request,id):
     camera_ready_context=ContextSubmition.objects.filter(id=id).first()
 
@@ -302,7 +315,8 @@ def chair_camera_ready_context(request,id):
 
             return redirect('chair_context',camera_ready_context.event.id)
         
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 def co_chair_view(request):
     cochair=Event.objects.filter(co_chair_id=request.user).all()
     
@@ -312,6 +326,8 @@ def co_chair_view(request):
     return render(request,'cochair/cochair_view.html',{"cochair":cochair,"previllage":previllage})
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 
 def co_chair_details(request,id):
     event=Event.objects.filter(id=id).first()
@@ -332,6 +348,8 @@ def co_chair_details(request,id):
                    
                                                       })
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 
 def co_chair_edit_event(request, id):
     if request.method == "POST":
@@ -344,6 +362,8 @@ def co_chair_edit_event(request, id):
 
     return redirect("cochair_details",id)
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 
 def cochair_registered_users(request):
     event=Event.objects.filter(co_chair_id=request.user).all()
@@ -361,6 +381,8 @@ def cochair_registered_users(request):
     
     return render(request,"cochair/registered_users.html",{"total_registered":tr,"previllage":previllage})
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 
 def co_chair_paper(request):
     event=Event.objects.filter(co_chair_id=request.user).all()
@@ -375,6 +397,8 @@ def co_chair_paper(request):
     return render(request,'cochair/paper.html',{"paper":p,"previllage":previllage})
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 
 def co_chair_paper_details(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
@@ -412,6 +436,8 @@ def co_chair_paper_details(request, id):
         {"obj": paper, "form": form, "previllage": previllage},
     )
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 
 def co_chair_camera_ready_paper(request,id):
     
@@ -437,7 +463,8 @@ def co_chair_camera_ready_paper(request,id):
             return redirect("cochair_paper",camera_ready_paper.event.id)
         
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 
 def co_chair_poster(request):
     event=Event.objects.filter(co_chair_id=request.user).all()
@@ -449,6 +476,8 @@ def co_chair_poster(request):
 
 
     return render(request,'cochair/poster.html',{"poster":p,"previllage":previllage})
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 
 def co_chair_poster_details(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
@@ -486,6 +515,8 @@ def co_chair_poster_details(request, id):
         {"obj": poster, "form": form, "previllage": previllage},
     )
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 
 def co_chair_camera_ready_poster(request,id):
     camera_ready_poster=PosterSubmition.objects.filter(id=id).first()
@@ -510,6 +541,8 @@ def co_chair_camera_ready_poster(request,id):
             return redirect('cochair_poster',camera_ready_poster.event.id)
         
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 
 def co_chair_context(request):
     event=Event.objects.filter(co_chair_id=request.user).all()
@@ -523,6 +556,8 @@ def co_chair_context(request):
     return render(request,'cochair/cochair_context.html',{"context":p,"previllage":previllage})
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 
 def co_chair_context_details(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
@@ -560,6 +595,8 @@ def co_chair_context_details(request, id):
     )
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['cochair'])
 
 def co_chair_camera_ready_context(request,id):
     camera_ready_context=ContextSubmition.objects.filter(id=id).first()

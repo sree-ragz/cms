@@ -47,9 +47,9 @@
             
             <td>{{event.papername.event.venue}}</td>
             <td>{{event.papername.event.registration_fees}}</td>
-            <td>
+            <td class="text-white">
               {% if event.papername.status == 'pending' %}
-                            <span class="bg-warning rounded">Pending</span>
+                            <span class="bg-primary rounded">Pending</span>
                             {% elif event.papername.status == 'accepted' %}
 
                             <span class="bg-success rounded">Accepted</span>
@@ -59,10 +59,10 @@
             </td>
             
             {% if event.papername.status == 'accepted' %}
-            <td>
+            <td class="text-white">
               {% if event.papername.camera_ready_submition_status == 'pending' %}
               
-              <span  class="bg-warning  rounded ">Pending</span>
+              <span  class="bg-primary  rounded ">Pending</span>
               {% elif event.papername.camera_ready_submition_status == 'accepted' %}
             <span class="bg-success rounded">Approved</span>
               {% elif event.papername.camera_ready_submition_status == 'declined' %}

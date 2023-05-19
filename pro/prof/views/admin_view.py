@@ -29,7 +29,8 @@ from datetime import date
 #  It retrieves the total count of Event, Participant, PaperSubmition, and PosterSubmition objects, 
 # and the Privillage object associated with the current user (if any), and passes them as context variables to the admin_page.html template.
 #  The template can use these variables to display various statistics and options for the administrator.
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_page(request):
     event = Event.objects.all().count()
     participant = Participant.objects.all().count()
@@ -52,6 +53,8 @@ def admin_page(request):
 #Overall, this code appears to be a view function for handling requests related to event administration. 
 # It retrieves privileges, events, participant types, and form data. 
 # It saves the form data if the request method is POST and renders the appropriate template with the necessary context.
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_event_list(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     chair=Privillage.objects.filter(chair=True).all()
@@ -79,6 +82,8 @@ def admin_event_list(request):
 #function for handling requests to edit an event. It checks if the request method is POST,
 #  retrieves the event with the given id, creates an instance of the AdminAddorEditEvent form with the POST data and the event instance
 # , and saves the form data if it is valid. Finally, it redirects the user to the "admin_event_list" URL in both cases.
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_edit_event(request, id):
     if request.method == "POST":
         event = Event.objects.filter(id=id).first()
@@ -91,6 +96,8 @@ def admin_edit_event(request, id):
     return redirect("admin_event_list")
 
 #function for admin to delete an event
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_delete_event(request, id):
     event = Event.objects.filter(id=id).first().delete()
     return redirect("admin_event_list")
@@ -102,6 +109,8 @@ def admin_delete_event(request, id):
 #  It creates an instance of the AdminAddorEditReviewerPaper form. If the request method is POST and the form data is valid,
 #  it saves the form data and redirects to the "admin_reviewer_paper" URL. Finally,
 #  it renders the appropriate template with the necessary context.
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_reviewer_paper(request):
     
     previllage = Privillage.objects.filter(userid=request.user).first()  # Retrieve the privilege of the current user
@@ -128,6 +137,8 @@ def admin_reviewer_paper(request):
 # It retrieves the privilege of the current user, all context submissions, reviewer contexts, and privileges of reviewers.
 #  It creates an instance of the AdminAddorEditReviewerContext form. If the request method is POST and the form data is valid, it saves the form data and redirects to the "admin_reviewer_context" URL. 
 # Finally, it renders the appropriate template with the necessary context.
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_reviewer_context(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     cs=ContextSubmition.objects.all()
@@ -155,6 +166,8 @@ def admin_reviewer_context(request):
 
 
 #this admin_edit_reviewer_context function is to edit the reviewer assigned for reviewing context
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_edit_reviewer_context(request, id):
     if request.method == "POST":
         context = Reviewer_Context.objects.filter(id=id).first()
@@ -164,11 +177,15 @@ def admin_edit_reviewer_context(request, id):
             return redirect("admin_reviewer_context")
     return redirect("admin_reviewer_context")
 # this function is to delete the reviewer assigned for context 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_delete_reviewer_context(request, id):
     Reviewer_Context.objects.filter(id=id).delete()
     return redirect("admin_reviewer_context")
 
 #this admin_edit_reviewer_context function is to edit the reviewer assigned for reviewing paper
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_edit_reviewer_paper(request, id):
     if request.method == "POST":
         paper = Reviewer_Paper.objects.filter(id=id).first()
@@ -179,6 +196,8 @@ def admin_edit_reviewer_paper(request, id):
     return redirect("admin_reviewer_paper")
 
 # this function is to delete the reviewer assigned for paper 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_delete_reviewer_paper(request, id):
     Reviewer_Paper.objects.filter(id=id).delete()
     return redirect("admin_reviewer_paper")
@@ -188,6 +207,8 @@ def admin_delete_reviewer_paper(request, id):
 #  and all poster submissions. It creates an instance of the AdminAddorEditReviewerPoster form.
 #  If the request method is POST and the form data is valid, it saves the form data and redirects to the "admin_reviewer_poster" URL.
 #  Finally, it renders the appropriate template with the necessary context.
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_reviewer_poster(request):
     # Retrieve the privilege of the current user
     previllage = Privillage.objects.filter(userid=request.user).first()
@@ -229,7 +250,8 @@ def admin_reviewer_poster(request):
 #  and saves the form data if it is valid. Finally, it redirects the user to the "admin_reviewer_poster" URL in both cases.
 
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_edit_reviewer_poster(request, id):
     # Check if the request method is POST
     if request.method == "POST":
@@ -251,6 +273,8 @@ def admin_edit_reviewer_poster(request, id):
 
 
 #function for delete reviewer assigned for poster
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_delete_reviewer_poster(request, id):
     Reviewer_Poster.objects.filter(id=id).delete()
     return redirect("admin_reviewer_poster")
@@ -260,6 +284,7 @@ def admin_delete_reviewer_poster(request, id):
 #  If the request method is POST and the form data is valid, it saves the form data, retrieves the newly created user,
 #  creates a new Privillage instance for the user with is_reviewer=True, and redirects to the "admin_add_reviewer" URL. 
 # Finally, it renders the appropriate template with the necessary context.
+
 def admin_add_reviewer(request):
     # Retrieve the privilege of the current user
     previllage = Privillage.objects.filter(userid=request.user).first()
@@ -278,10 +303,13 @@ def admin_add_reviewer(request):
         # Check if the form data is valid
         if form.is_valid():
             # Get the username from the form data
+            reviewer=form.save(commit=False)
             username = form.cleaned_data.get("username")
-
-            # Save the form data
-            form.save()
+            group=Group.objects.get(name='reviewer')
+            
+            reviewer=form.save()
+            group=Group.objects.get(name='reviewer')
+            reviewer.groups.add(group)
 
             # Retrieve the newly created user
             user = User.objects.filter(username=username).first()
@@ -301,12 +329,16 @@ def admin_add_reviewer(request):
     )
 
 #function for delete reviewer
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_delete_reviewer(request, name):
     User.objects.filter(username=name).delete()
     return redirect("admin_add_reviewer")
 
 
 #function for delete chair and cochair
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_delete_chair_cochair(request, name):
     User.objects.filter(username=name).delete()
     return redirect("admin_add_chair_and_cochair")
@@ -320,6 +352,7 @@ def admin_delete_chair_cochair(request, name):
 # it saves the form data, retrieves the newly created user, creates a new Privillage instance for the user, 
 # and sets the chair or co_chair attribute based on the selected value of 'chair'. Finally, 
 # it redirects to the "admin_add_chair_and_cochair" URL and renders the appropriate template with the necessary context.
+
 def admin_add_chair_and_cochair(request):
 
     # Retrieve the privilege of the current user
@@ -342,11 +375,13 @@ def admin_add_chair_and_cochair(request):
 
         # Check if the form data is valid
         if form.is_valid():
+
+            f=form.save(commit=False)
             # Get the username from the form data
             username = form.cleaned_data.get("username")
 
             # Save the form data
-            form.save()
+            f=form.save()
 
             # Retrieve the newly created user
             user = User.objects.filter(username=username).first()
@@ -355,8 +390,10 @@ def admin_add_chair_and_cochair(request):
             privillage = Privillage()
             privillage.userid = user
             if chair == 'chair':
+                
                 privillage.chair = True
             elif chair == 'cochair':
+                
                 privillage.co_chair = True
             privillage.save()
 
@@ -368,6 +405,8 @@ def admin_add_chair_and_cochair(request):
 
 
 #this function is to render all the registered participants details 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_registered_user(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     participants=Participant.objects.all()
@@ -377,6 +416,8 @@ def admin_registered_user(request):
     return render(request,"admin/registered_user.html",{"previllage":previllage,"participants":participants})
 
 # this admin_activate_deactivate_user function is to acivate and deactivate participants
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_activate_deactivate_user(request,id):
     participant=Participant.objects.filter(id=id).first()
 
@@ -397,7 +438,8 @@ def admin_activate_deactivate_user(request,id):
 #  if the request method is POST, saves the updated object to the database, 
 # and redirects the user to the admin_reviewer_paper view. 
 # The function also includes some print statements for debugging purposes.
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_edit_paperpage(request,id):
     
     paper = PaperSubmition.objects.filter(id=id).first()
@@ -406,7 +448,7 @@ def admin_edit_paperpage(request,id):
     form = EditPaperSubmitionFormAdmin(instance=paper)
 
     if request.method == "POST":    
-        print("jjjjj") 
+         
         form = EditPaperSubmitionFormAdmin(
             request.POST, request.FILES, instance=paper
         )
@@ -427,7 +469,8 @@ def admin_edit_paperpage(request,id):
 # form with the poster instance. If the request method is POST and the form data is valid, 
 # it updates the submit_count attribute of the form to 0, saves the form data, and redirects to the "admin_reviewer_poster" 
 # URL. Finally, it redirects to the "admin_reviewer_poster" URL in both cases.
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_edit_posterpage(request, id):
     # Retrieve the poster submission with the given id
     poster = PosterSubmition.objects.filter(id=id).first()
@@ -460,6 +503,8 @@ def admin_edit_posterpage(request, id):
 #  form with the context instance. If the request method is POST and the form data is valid, it updates the submit_count
 #  attribute of the form to 0, saves the form data, and redirects to the "admin_reviewer_poster" URL. Finally, 
 # it redirects to the "admin_reviewer_poster" URL in both cases.
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def admin_edit_contextpage(request, id):
     # Retrieve the context submission with the given id
     context = ContextSubmition.objects.filter(id=id).first()

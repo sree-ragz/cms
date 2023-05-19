@@ -27,7 +27,8 @@ from prof.views.sent_mail import sent_mail_from
 # it renders the dashboard.html template with the events, participant object, privilege, and the current date.
 
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def dashboard(request):
     # Retrieve all events
     events = Event.objects.all()
@@ -59,7 +60,8 @@ def dashboard(request):
 # it redirects them to the login page.
 
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def eventregistration(request, event_id):
     if request.user.is_authenticated:
         previllage = Privillage.objects.filter(userid=request.user).first()
@@ -173,6 +175,8 @@ def eventregistration(request, event_id):
 # If the User_Event object already exists, it is updated to set the paper and poster fields to False.
 #  An email notification is sent to the user to confirm their successful registration.
 #  Finally, the user is redirected to the event registration page for the specified event.
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def register_as_participant(request, event_id):
     # Retrieve the event object
     events = Event.objects.get(pk=event_id)
@@ -211,7 +215,8 @@ def register_as_participant(request, event_id):
 #  and sends an email notification to the user. 
 # Finally, the user is redirected to the event registration page for the specified event.
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def user_context_registration(request,event_id):
 
     if request.method=='POST':
@@ -259,7 +264,8 @@ def user_context_registration(request,event_id):
         
 
    # this function is to edit the users profile 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def Editprofile(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     user = request.user
@@ -294,6 +300,8 @@ def Editprofile(request):
     )
 
 # this fuction is to view the registered events 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def registeredevents(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     participant_obj = Participant.objects.filter(user=request.user).first()
@@ -306,6 +314,8 @@ def registeredevents(request):
     )
 
 #this function is to render the status of submitted paper
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def submitedpaper(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     paper = PaperSubmition.objects.filter(userid=request.user).all()
@@ -317,6 +327,8 @@ def submitedpaper(request):
     )
 
 #this function is to render the status of submitted poster
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def submitedposter(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     poster = PosterSubmition.objects.filter(userid=request.user).all()
@@ -327,6 +339,8 @@ def submitedposter(request):
         request, "user/submitedposter.html", {"poster": poster, "previllage": previllage,"participant": participant_obj,}
     )
 #this function is to render the status of submitted context
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def submitedcontext(request):
     previllage = Privillage.objects.filter(userid=request.user).first()
     context = ContextSubmition.objects.filter(userid=request.user).all()
@@ -338,6 +352,8 @@ def submitedcontext(request):
     )
 
 #this function is to view the details of submitted paper
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def viewsubmitedpaper(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
     paper = PaperSubmition.objects.filter(id=id).first()
@@ -361,7 +377,8 @@ def viewsubmitedpaper(request, id):
         "user/viewsubmitedpaper.html",
         {"paper": paper, "form": form, "previllage": previllage},
     )
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def camera_ready_paper_submition(request,paper_id):
 
     camera_ready_paper=PaperSubmition.objects.filter(id=paper_id).first()
@@ -377,7 +394,8 @@ def camera_ready_paper_submition(request,paper_id):
             message = f"your are successfully submitted camera ready paper for {camera_ready_paper.event.title}"
             sent_mail_from(to_email,subject,message)
             return redirect('viewsubmitedpaper',paper_id)
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def camera_ready_poster_submition(request,id):
     camera_ready_poster=PosterSubmition.objects.filter(id=id).first()
 
@@ -407,6 +425,8 @@ def camera_ready_context_submition(request,id):
             sent_mail_from(to_email,subject,message)
             return redirect('viewsubmitedcontext',id)
 #this function is to view the details of submitted poster
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def viewsubmitedposter(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
     poster = PosterSubmition.objects.filter(id=id).first()
@@ -425,6 +445,8 @@ def viewsubmitedposter(request, id):
         {"poster": poster, "form": form, "previllage": previllage},
     )
 #this function is to view the details of submitted context
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['user'])
 def viewsubmitedcontext(request, id):
     previllage = Privillage.objects.filter(userid=request.user).first()
     context = ContextSubmition.objects.filter(id=id).first()

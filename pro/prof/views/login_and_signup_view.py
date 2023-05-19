@@ -9,7 +9,7 @@ from prof.decorators import *
 from django.contrib.auth.models import Group
 from prof.models import *
 from django.views.generic.edit import UpdateView
-
+from django.contrib.auth.models import Group
 from django.contrib import messages
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -28,7 +28,7 @@ from prof.views.sent_mail import sent_mail_from
 # If an exception occurs during the process, an error message is returned. Finally, if the request method is not POST,
 #  the login page is rendered.
 
-@unauthenticated_user
+
 def loginpage(request):
     # Check if the request method is POST
     if request.method == "POST":
@@ -145,7 +145,12 @@ def register(request):
                 # Save the form data to create a new user, but don't activate the user yet
                 user = form.save(commit=False)
                 user.is_active = False
+                
+                
+               
                 user = form.save()
+                group=Group.objects.get(name='user')
+                user.groups.add(group)
 
                 # Generate the verification email content
                 uid = user.pk
@@ -210,7 +215,6 @@ def register2(request):
             return redirect("/dashboard")
 
     return render(request, "base/registration2.html", {"form2": form2})
-
 
 
 def logoutpage(request):

@@ -30,7 +30,8 @@ from prof.views.sent_mail import sent_mail_from
 # posters, and contexts associated with the user. The function then renders the "reviewertable.html" template,
 #  passing in the retrieved data along with the current user and previllage information.
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['reviewer'])
 def reviewertable(request):
     # Retrieve the Privillage object for the current user
     previllage = Privillage.objects.filter(userid=request.user).first()
@@ -59,7 +60,8 @@ def reviewertable(request):
 #  If the request method is POST, the function processes the form submission, saves the form data, 
 # and sends an email notification based on the status of the poster.
 # Finally, the function renders the "reviewerposterpage.html" template, passing in the poster object, the form, and the previllage information.
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['reviewer'])
 def reviewerposterpage(request, id):
     # Retrieve the Privillage object for the current user
     previllage = Privillage.objects.filter(userid=request.user).first()
@@ -111,6 +113,8 @@ def reviewerposterpage(request, id):
 #  and sends an email notification based on the status of the context submission.
 #  Finally, the function renders the "reviewercontextpage.html" template, passing in the context object, the form, 
 # and the previllage information.
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['reviewer'])
 def reviewercontextpage(request, id):
     # Retrieve the Privillage object for the current user
     previllage = Privillage.objects.filter(userid=request.user).first()
@@ -160,6 +164,8 @@ def reviewercontextpage(request, id):
 #  If the request method is POST, the function processes the form submission, saves the form data,
 #  and sends an email notification based on the status of the paper submission. 
 # Finally, the function renders the "reviewerpaperpage.html" template, passing in the paper object, the form, and the previllage information.
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['reviewer'])
 def reviewerpaperpage(request, id):
     # Retrieve the Privillage object for the current user
     previllage = Privillage.objects.filter(userid=request.user).first()
@@ -209,6 +215,8 @@ def reviewerpaperpage(request, id):
 # If the request method is POST, the function processes the form submission by instantiating and validating the 
 # EditCameraReadyPaperSubmitionFormReviewer form. If the form is valid, 
 # it saves the form data and sends an email notification to the author based on the status of the camera ready paper submission. Finally, the function redirects the user to the reviewertable page.
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['reviewer'])
 def reviewer_camera_ready_paper(request, id):
     # Retrieve the camera ready paper submission object with the given id
     camera_ready_paper = PaperSubmition.objects.filter(id=id).first()
@@ -235,7 +243,8 @@ def reviewer_camera_ready_paper(request, id):
                 sent_mail_from(to_email, subject, message)
 
             return redirect('reviewertable')
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['reviewer'])
 def reviewer_camera_ready_poster(request, id):
     # Retrieve the camera ready poster submission object with the given id
     camera_ready_poster = PosterSubmition.objects.filter(id=id).first()
@@ -263,7 +272,8 @@ def reviewer_camera_ready_poster(request, id):
 
             return redirect('reviewertable')
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['reviewer'])
 def reviewer_camera_ready_context(request, id):
     # Retrieve the camera ready context submission object with the given id
     camera_ready_context = ContextSubmition.objects.filter(id=id).first()
