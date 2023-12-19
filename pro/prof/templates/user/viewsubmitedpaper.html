@@ -12,7 +12,21 @@
         <div class="row">
 
             <div class="col-md-6">
-                <div class=" border-0" style="width: fit-content; height: 100%;">
+              <div class='mt-5  '>
+              <div style="display: flex; justify-content: space-between;" class='mt-4'>
+                <p class='h4 ms-3'>{{paper.papername}}</p>
+                <div class="text-center me-3"><a class="btn btn-primary height h-100" href="{{paper.paperfile.url}}">view</a></div>
+              </div>
+              <div class="p-3 py-0 mt-2">
+                    
+                <embed type="application/pdf"
+                    src="{% static paper.paperfile.url %}"
+                    width="100%" height="615px"/>
+              </div>
+
+
+            </div>
+                {% comment %} <div class=" border-0" style="width: fit-content; height: 100%;">
                     <img src="{% static paper.event.event_image.url %}" class="card-img-top" style="height:30rem;">
                     <div class="card-body">
                       <h5 class="card-title">{{paper.event.title}}</h5>
@@ -52,7 +66,7 @@
                         <div><p>:{{paper.event.registration_fees}}</p></div>
                       </div>
                     </div>
-                  </div>
+                  </div> {% endcomment %}
             </div>
 
 
@@ -67,16 +81,7 @@
                 <div class="col-md-12"><label class="labels">abstract</label>
                   <textarea readonly class="form-control" name="abstract" id="" cols="30" rows="5">{{paper.abstract}}</textarea>
                   </div> <br>
-                <div class="col-md-12"><label class="labels">paperfile</label>
-                    
-                    <embed type="application/pdf"
-                        src="{% static paper.paperfile.url %}"
-                        width="100%" height="100%"/>
-
-                        <div class="text-center"><a class="btn btn-primary" href="{{paper.paperfile.url}}">view</a></div>
-
-
-                </div>
+                
                 {% if paper.remark != 'None' %}
                 <div class="col-md-12"><label class="labels">Reviewer Remark</label>
                   <textarea readonly class="form-control"  id="" cols="30" rows="5">{{paper.remark}}</textarea>

@@ -10,7 +10,7 @@
   
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-12 ">
+            {% comment %} <div class="col-md-6 col-12 ">
 
                 <div class=" border-0" style="width: fit-content; height: 100%;">
                     <img src="{% static obj.event.event_image.url %}" class="card-img-top" style="height:30rem;">
@@ -53,19 +53,14 @@
                       </div>
                     </div>
                   </div>
-            </div>
+            </div> {% endcomment %}
 
 
 
-            <div  class="col-md-6 col-12 remark">
+            <div  class="cp-5 remark">
               <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="d-flex justify-content-center"><select name="status" class="form-select w-50" aria-label="Default select example">
-                    <option class="bg-primary" value="pending" selected>Pending</option>
-                    
-                    <option class="bg-success text-white" value="accepted">Accepted</option>
-                    <option class="bg-danger text-white" value="declined">Decline</option>
-                  </select></div>
+                
                   <div class=" mt-5">
                     <p><span style="font-weight: bold;">CONTEXT NAME:</span> 
                     {{obj.name}}
@@ -88,7 +83,12 @@
                       
                         <textarea name="remark" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px">{{obj.remark}}</textarea>
                         <label for="floatingTextarea2">Remarks</label>
-                        
+                        <div class="d-flex justify-content-center mt-3"><select name="status" class="form-select w-50" aria-label="Default select example">
+                          <option class="bg-primary" value="pending" selected>Pending</option>
+                          
+                          <option class="bg-success text-white" value="accepted">Accepted</option>
+                          <option class="bg-danger text-white" value="declined">Decline</option>
+                        </select></div>
                       </div>
                       <button type="submit"  class="btn btn-primary mt-3">Submit</button>
 

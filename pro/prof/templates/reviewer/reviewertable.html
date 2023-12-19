@@ -8,8 +8,11 @@
 
     <div>
     <h1 class="text-center">PAPER DETAILS</h1>
+    <hr>
     <div class="container">
+      {% if reviewerpaper%}
       <div class="row">
+        
     <table class="table table-hover">
         <thead>
           <tr style="background-color:#585960; color:white ;">
@@ -41,11 +44,11 @@
             <td>
                 {% if details.papername.status == 'pending' %}
                 
-                <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+                <span style=" border-radius: 3px;" class="text-warning ">Pending</span>
                 {% elif details.papername.status == 'accepted' %}
-              <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+              <span style=" border-radius: 3px;" class=" text-success ">Approved</span>
                 {% elif details.papername.status == 'declined' %}
-              <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+              <span style=" border-radius: 3px;" class="text-danger  ">Declined</span>
               {% endif %}
             </td>
 
@@ -53,22 +56,20 @@
             <td>
               {% if details.papername.camera_ready_submition_status == 'pending' %}
               
-              <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+              <span style=" border-radius: 3px;" class="text-warning ">Pending</span>
               {% elif details.papername.camera_ready_submition_status == 'accepted' %}
-            <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+            <span style=" border-radius: 3px;" class="text-success ">Approved</span>
               {% elif details.papername.camera_ready_submition_status == 'declined' %}
-            <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+            <span style=" border-radius: 3px;" class="text-danger ">Declined</span>
             {% elif details.papername.camera_ready_submition_status == 'active' %}
-            <span style=" border-radius: 3px;" class="btn btn-info text-white ">Active</span>
+            <span style=" border-radius: 3px;" class="text-primary ">Active</span>
             {% endif %}
           </td>
           {% else %}
           <td></td>
           {% endif %}
             
-            <td><a href="{% url 'reviewerpaperpage' details.papername.pk %}">details</a></td>
-            
-            
+            <td><a href="{% url 'reviewerpaperpage' details.papername.pk %}" class="btn btn-primary text-white ">details</a></td>
             
           </tr>
           {% endfor %}
@@ -77,10 +78,15 @@
         </tbody>
       </table>
       </div>
+      {%else%}
+      <p class="text-center  h3 pt-3">No data Available</p>
+        {% endif %}
 
 
 <div class="row mt-5">
     <h1 class="text-center">POSTER DETAILS</h1>
+    <hr>
+    {%if reviewerposter%}
         <table class="table table-hover">
             <thead>
               <tr style="background-color:#585960; color:white ;">
@@ -110,11 +116,11 @@
                   <td>
                       {% if details.postername.status == 'pending' %}
                       
-                      <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+                      <span style=" border-radius: 3px;" class=" text-warning ">Pending</span>
                       {% elif details.postername.status == 'accepted' %}
-                    <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+                    <span style=" border-radius: 3px;" class=" text-success ">Approved</span>
                       {% elif details.postername.status == 'declined' %}
-                    <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+                    <span style=" border-radius: 3px;" class="text-danger ">Declined</span>
                   </td>
                   {% endif %}
 
@@ -122,19 +128,19 @@
                   <td>
                     {% if details.postername.camera_ready_submition_status == 'pending' %}
                     
-                    <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+                    <span style=" border-radius: 3px;" class="text-warning ">Pending</span>
                     {% elif details.postername.camera_ready_submition_status == 'accepted' %}
-                  <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+                  <span style=" border-radius: 3px;" class="text-success ">Approved</span>
                     {% elif details.postername.camera_ready_submition_status == 'declined' %}
-                  <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+                  <span style=" border-radius: 3px;" class="text-danger ">Declined</span>
                   {% elif details.postername.camera_ready_submition_status == 'active' %}
-                  <span style=" border-radius: 3px;" class="btn btn-info text-white ">Active</span>
+                  <span style=" border-radius: 3px;" class="text-primary ">Active</span>
                   {% endif %}
                 </td>
                 {% else %}
                 <td></td>
                 {% endif %}
-                  <td><a href="{% url 'reviewerposterpage' details.postername.pk %}">details</a></td>
+                  <td><a href="{% url 'reviewerposterpage' details.postername.pk %}"  class="btn btn-primary text-white ">details</a></td>
                   
                   
                   
@@ -146,12 +152,17 @@
             </tbody>
           </table>
           </div>
+        {%else%}
+        <p class="text-center  h3 pt-3">No data Available</p>
+          {% endif %}
     </div>
 
 
 
     <div class="row mt-5">
       <h1 class="text-center">CONTEXT DETAILS</h1>
+      <hr>
+        {% if reviewercontext %}
           <table class="table table-hover">
               <thead>
                 <tr style="background-color:#585960; color:white ;">
@@ -181,11 +192,11 @@
                     <td>
                         {% if details.contextname.status == 'pending' %}
                         
-                        <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+                        <span style=" border-radius: 3px;" class=" text-warning ">Pending</span>
                         {% elif details.contextname.status == 'accepted' %}
-                      <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+                      <span style=" border-radius: 3px;" class=" text-success ">Approved</span>
                         {% elif details.contextname.status == 'declined' %}
-                      <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+                      <span style=" border-radius: 3px;" class=" text-danger ">Declined</span>
                     </td>
                     {% endif %}
 
@@ -194,19 +205,19 @@
                     <td>
                       {% if details.contextname.camera_ready_submition_status == 'pending' %}
                       
-                      <span style=" border-radius: 3px;" class="btn btn-primary text-white ">Pending</span>
+                      <span style=" border-radius: 3px;" class=" text-warning ">Pending</span>
                       {% elif details.contextname.camera_ready_submition_status == 'accepted' %}
-                    <span style=" border-radius: 3px;" class="btn btn-success text-white ">Approved</span>
+                    <span style=" border-radius: 3px;" class=" text-success ">Approved</span>
                       {% elif details.contextname.camera_ready_submition_status == 'declined' %}
-                    <span style=" border-radius: 3px;" class="btn btn-danger text-white ">Declined</span>
+                    <span style=" border-radius: 3px;" class=" text-danger ">Declined</span>
                     {% elif details.contextname.camera_ready_submition_status == 'active' %}
-                    <span style=" border-radius: 3px;" class="btn btn-info text-white ">Active</span>
+                    <span style=" border-radius: 3px;" class=" text-primary ">Active</span>
                     {% endif %}
                   </td>
                   {% else %}
                   <td></td>
                   {% endif %}
-                    <td><a href="{% url 'reviewercontextpage' details.contextname.pk %}">details</a></td>
+                    <td><a href="{% url 'reviewercontextpage' details.contextname.pk %}" class="btn btn-primary text-white ">details</a></td>
                     
                     
                     
@@ -218,6 +229,9 @@
               </tbody>
             </table>
             </div>
+            {%else%}
+            <p class = "text-center h3 pt-3">No data Available </p>
+            {% endif %}
       </div>
     <style>
         .table{
@@ -226,6 +240,7 @@
           border-color: black;
     
         }
+        
       </style>
       </div>
     {% endblock %}

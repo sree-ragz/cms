@@ -120,8 +120,6 @@ class Privillage(models.Model):
     co_chair=models.BooleanField(default=False)
 
     
-
-
 class User_Event(models.Model):
     event_id=models.ForeignKey(Event,on_delete=models.CASCADE)
     user_id=models.ForeignKey(User,on_delete=models.CASCADE)

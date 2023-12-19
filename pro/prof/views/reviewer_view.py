@@ -40,7 +40,7 @@ def reviewertable(request):
     reviewerpaper = Reviewer_Paper.objects.filter(userid=request.user).all()
     reviewerposter = Reviewer_Poster.objects.filter(userid=request.user).all()
     reviewercontext = Reviewer_Context.objects.filter(userid=request.user).all()
-
+    
     # Render the reviewertable.html template with the necessary data
     return render(
         request,
@@ -96,7 +96,7 @@ def reviewerposterpage(request, id):
                 subject = "Your poster is declined"
                 message = f"Your poster is declined for the {poster.event.title} conference"
                 sent_mail_from(to_email, subject, message)
-
+            
             return redirect("reviewertable")
 
     # Render the reviewerposterpage.html template with the necessary data

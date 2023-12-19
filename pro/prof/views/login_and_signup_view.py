@@ -112,7 +112,6 @@ def loginpage(request):
 #  If there are any exceptions or if the form data is invalid, appropriate error messages are displayed. 
 # Finally, the registration page is rendered with the form.
 
-@unauthenticated_user
 def register(request):
     # Create an instance of the CreateUserForm
     form = CreateUserForm()
@@ -121,13 +120,13 @@ def register(request):
     if request.method == "POST":
         # Create an instance of the CreateUserForm with the POST data
         form = CreateUserForm(request.POST)
-
+        # print(form)
         # Check if the form data is valid
         if form.is_valid():
             try:
                 # Retrieve the username and email from the form data
-                username = form.cleaned_data.get("username")
-                to_email = form.cleaned_data.get("email")
+                username = form.cleaned_data['username']
+                to_email = form.cleaned_data['email']
                 print(username, to_email)
 
                 # Check if the username is already taken
@@ -165,6 +164,7 @@ def register(request):
                 return redirect("/register")
 
             except Exception as e:
+                print(e)
                 # Return an error message if something goes wrong
                 return HttpResponse("something went wrong")
 

@@ -74,7 +74,7 @@ def admin_event_list(request):
 
     return render(
         request,
-        "admin/admin_event_list.html",
+        "admin/admin_event_list.html",              
         {"previllage": previllage, "event": list(events), "form": addform, "pt": pt,
          "chair":chair,"cochair":cochair},
     )

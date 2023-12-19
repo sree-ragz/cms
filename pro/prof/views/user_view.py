@@ -65,28 +65,27 @@ def dashboard(request):
 def eventregistration(request, event_id):
     if request.user.is_authenticated:
         previllage = Privillage.objects.filter(userid=request.user).first()
-        print(event_id)
+        
         user_events_obj = User_Event.objects.filter(
             event_id=event_id, user_id=request.user
         ).first()
         # print(user_events_obj.poster)
 
         events = Event.objects.get(pk=event_id)
-        print(events)
-        print(events.title)
+
         form = PaperSubmitionForm()
         form2 = PosterSubmitionForm()
         if request.method == "POST":
             form = PaperSubmitionForm(request.POST, request.FILES)
             form2 = PosterSubmitionForm(request.POST, request.FILES)
+            
             if form.is_valid():
-                print(request.user)
+               
                 privillages = Privillage.objects.get(userid=request.user)
                 user_events = User_Event.objects.filter(
                     event_id=event_id, user_id=request.user
                 ).first()
-                print(privillages.is_author)
-                print(user_events)
+                
                 if privillages.is_author is False:
                     privillages.is_author = True
                     privillages.save()

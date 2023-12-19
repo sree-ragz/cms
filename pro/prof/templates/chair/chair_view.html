@@ -1,71 +1,54 @@
-{% extends 'navbar/dashboardnav.html' %}
+{% extends 'navbar/dashboardnav.html' %} {% load static %} {% block content %}
 
-
-{% load static %}
-
-{% block content %}
-
-
-    <div>
-        
-    <h1 class="text-center">CHAIR</h1>
-    <div class="container">
-      <div class="row">
-    <table class="table table-hover">
+<div>
+  <h1 class="text-center">CHAIR</h1>
+  <div class="container">
+    <div class="row">
+      <table class="table table-hover">
         <thead>
-          <tr style="background-color:#585960; color:white ;">
+          <tr style="background-color: #585960; color: white">
             <th scope="col">Event Name</th>
             <th scope="col">Paper</th>
             <th scope="col">Poster</th>
             <th scope="col">Context</th>
-            
-            <th scope="col"  > From Date</th>
-            
-            <th scope="col"  > To Date</th>
-            
+
+            <th scope="col">From Date</th>
+
+            <th scope="col">To Date</th>
 
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-
-            {% for details in chair %}
+          {% for details in chair %}
           <tr>
             <th scope="row">{{details.title}}</th>
             <td>{{details.paper_submited}}</td>
             <td>{{details.poster_submited}}</td>
             <td>{{details.context}}</td>
-           
+
             <td>{{details.from_date}}</td>
             <td>{{details.to_date}}</td>
-            
-            
-            <td><a href="{% url 'chair_details' details.id %}">details</a></td>
-            
-            
-            
+
+            <td>
+              <a
+                href="{% url 'chair_details' details.id %}"
+                class="btn btn-primary"
+                >details</a
+              >
+            </td>
           </tr>
           {% endfor %}
-          
-          
         </tbody>
       </table>
-      </div>
-
-
-
-
-
-
-
-      </div>
-    <style>
-        .table{
-          border-radius: 5px;
-          overflow: hidden;
-          border-color: black;
-    
-        }
-      </style>
-      </div>
-    {% endblock %}
+    </div>
+  </div>
+  <style>
+    .table {
+      border-radius: 5px;
+      overflow: hidden;
+      border-color: black;
+    }
+  </style>
+</div>
+{% endblock %}

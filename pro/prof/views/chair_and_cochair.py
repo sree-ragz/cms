@@ -30,7 +30,7 @@ def chair_view(request):
     print(chair)
     
 
-    return render(request,'chair/chair_view.html',{"chair":chair,"previllage":previllage,"s":False})
+    return render(request,'chair/chair_view.html',{"chair":chair,"previllage":previllage,"s":False}) 
 
 
 @login_required(login_url='login')
@@ -46,7 +46,6 @@ def chair_details(request,id):
     total_poster=PosterSubmition.objects.filter(event=id).all()
     total_context=ContextSubmition.objects.filter(event=id).all()
     print(total_context)
-
 
 
     return render(request,'chair/chair_details.html',
@@ -92,9 +91,9 @@ def chair_paper(request):
     event=Event.objects.filter(chair_id=request.user).all()
     p=[]
     for i in event:
-     paper=PaperSubmition.objects.filter(event=i.pk).all()
-     p+=paper
-    
+        paper=PaperSubmition.objects.filter(event=i.pk).all()
+        p+=paper
+        
     previllage=Privillage.objects.filter(userid=request.user).first()
 
     
@@ -114,7 +113,6 @@ def chair_paper_details(request, id):
             request.POST, request.FILES, instance=paper
         )
         if form.is_valid():
-            
             p=form.save(commit=False)
             p.submit_count=0
             p.save()
@@ -130,7 +128,7 @@ def chair_paper_details(request, id):
                 message = f"your paper is declined for {paper.event.title} conference"
                 sent_mail_from(to_email,subject,message)
 
-            return redirect("chair_paper",paper.event.id)
+            return redirect("chair_paper")
 
     return render(
         request,
@@ -143,7 +141,6 @@ def chair_paper_details(request, id):
 def chair_camera_ready_paper(request,id):
     
     camera_ready_paper=PaperSubmition.objects.filter(id=id).first()
-
     if request.method == 'POST':
         form=EditCameraReadyPaperSubmitionFormReviewer(request.POST,request.FILES,instance=camera_ready_paper)
 
@@ -206,7 +203,7 @@ def chair_poster_details(request, id):
                 sent_mail_from(to_email,subject,message)
 
 
-            return redirect("chair_poster",poster.event.id)
+            return redirect("chair_poster")
 
     return render(
         request,
@@ -282,7 +279,7 @@ def chair_context_details(request, id):
                 message = f"your context is declined for {context.event.title} conference"
                 sent_mail_from(to_email,subject,message)
 
-            return redirect("chair_context",context.event.id)
+            return redirect("chair_context")
 
     return render(
         request,

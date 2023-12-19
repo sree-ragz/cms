@@ -12,13 +12,12 @@
 
       <div>
         <div class="card-body">
-          <h5 class="card-title">{{event.title}}</h5>
-          <p class="card-text"><span style="font-weight: bold;">TOPIC:&nbsp;</span>{{event.topic}}
+          <h4 class="card-title h1 fw-bold mb-4">{{event.title}}</h4>
+          <p class="card-text h4"><span class='h4'>Topic : &nbsp;</span>{{event.topic}}
             
-
-
           </p>
-          <p class="card-text"><span style="font-weight: bold;">DESCRIPTION:&nbsp;</span>{{event.description}}
+          <hr>
+          <p class="card-text h4"><span  class='h4'>Description : &nbsp;</span>{{event.description}}
 
             
            
@@ -26,7 +25,8 @@
 
 
           </p>
-          <p class="card-text"><span style="font-weight: bold;">TARGETTED AUDIANCE:&nbsp;</span>{% for ta in event.targetted_audience.all %}{{ ta }}<br>{% endfor %}
+          <hr>
+          <p class="card-text h4"><span  class='h4'>Targeted Audience : &nbsp;</span>{% for ta in event.targetted_audience.all %}{{ ta }}<br>{% endfor %}
 
             
            
@@ -34,28 +34,28 @@
 
 
     </p>
-          <div class="d-flex flex-row">
-            <div>
-
-                <ion-icon  name="calendar"></ion-icon>
-            </div>
-            <div><p>:{{event.from_date}}-{{event.to_date}}</p></div>
-          </div>
-          <div class="d-flex flex-row">
-            <div>
-
-                <ion-icon name="location"></ion-icon>
-            </div>
-            <div><p>:{{event.venue}}</p></div>
-          </div>
-
-          <div class="d-flex flex-row">
-            <div>
-
-                <ion-icon name="pricetags"></ion-icon>
-            </div>
-            <div><p>:{{event.registration_fees}}</p></div>
-          </div>
+    <hr>
+    <time
+    datetime="2020-05-25 12:00:00"
+    style="font-weight: bold"
+  >
+    <ion-icon
+      class="mt-3"
+      name="calendar-clear-outline"
+    ></ion-icon
+    >&nbsp;
+    <span class="mt-0 h5"
+      >{{event.from_date}} - {{event.to_date}}</span
+    >
+  </time>
+  <div class="d-flex mt-2">
+    <ion-icon name="location-outline"></ion-icon>
+    <p class="ms-2">{{event.venue}} </p>
+  </div>
+  <div class="d-flex">
+    <ion-icon name="pricetags"></ion-icon>
+    <p class="ms-2">{{event.registration_fees}} Rs</p>
+  </div>
         </div>
       </div>
      <div class=" d-flex flex-row justify-content-around">
@@ -91,7 +91,7 @@ Register as participant
         
         
         {% if userevents.paper is True %}
-        <div class="bg-success mt-5  rounded ">Paper submited</div>
+        <div class="text-success mt-5 rounded "><ion-icon name="checkmark-done-outline"></ion-icon>Paper submitted</div>
         {% else %}
         <button type="button" style="margin-right: 3px;" class="btn btn-primary  mt-5 " data-bs-toggle="modal" data-bs-target="#Papersubmition">
             Submit Paper
@@ -109,8 +109,7 @@ Register as participant
 
         {% if userevents.poster is True %}
       
-       
-        <div class="bg-success mt-5  rounded ">Poster submited</div>
+        <div class="text-success mt-5 rounded "><ion-icon name="checkmark-done-outline"></ion-icon>Poster submitted</div>
         {% else %}
         <button type="button" style="margin-right: 3px;" class="btn btn-primary   mt-5 " data-bs-toggle="modal" data-bs-target="#Postersubmition">
             Submit Poster
@@ -132,7 +131,7 @@ Register as participant
         {% if userevents.context is True %}
       
        
-        <div class="bg-success mt-5  rounded ">Context submited</div>    
+        <div class="text-success mt-5 rounded "><ion-icon name="checkmark-done-outline"></ion-icon>Context submitted</div>
               {% else %}
         <button type="button" class="btn btn-primary    mt-5 " data-bs-toggle="modal" data-bs-target="#context">
             Submit context
@@ -317,9 +316,8 @@ Register as participant
 </div>
   
     <div class="col-md-6 " >
-      <div class=" border-0 " style=" height: 100%;">
-        <img src="{% static event.event_image.url %}" class="card-img-top" style="height:30rem;">
-      
+      <div class=" border-0" style=" height: 100%;">
+        <img src="{% static event.event_image.url %}" class="card-img-top rounded-3 " style="height:30rem;">
       </div>
     </div>
 
@@ -328,7 +326,7 @@ Register as participant
 
 <style>
 ion-icon {
-font-size: 24px;
+font-size: 20px;
 }
 
 

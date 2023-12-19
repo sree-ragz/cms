@@ -1,76 +1,73 @@
-{% extends 'navbar/dashboardnav.html' %}
-
-
-{% load static %}
-
-{% block content %}
+{% extends 'navbar/dashboardnav.html' %} {% load static %} {% block content %}
 
 <section>
+  <div class="container">
+    <div class="row">
+      {% for poster in poster%}
+      <div class="col-md-4">
+        <div
+          class="mt-5"
+          style="width: 18rem; border: 1px solid gray; border-radius: 5px"
+        >
+          <a href="">
+            <img
+              src="{% static poster.event.event_image.url %}"
+              class="card-img-top"
+              alt="..."
+              style="height: 15rem"
+            />
+          </a>
+          <div class="card-body">
+            <p class="card-text text-center">{{poster.event.title}}</p>
+            <p class="card-text">
+              <span style="font-weight: bold">Poster Name:&nbsp;</span
+              >{{poster.postername}}
+            </p>
+            <p class="card-text">
+              <span style="font-weight: bold">Status:&nbsp;</span>
 
-    <div class="container">
-        <div class="row">
-{% for poster in poster%}
-            <div class="col-md-4">
-                <div class=" mt-5" style="width: 18rem; border: 1px solid gray; border-radius: 5px;">
-                    <a href="">    <img src="{% static poster.event.event_image.url %}" class="card-img-top" alt="..." style="height: 15rem;">  </a>
-                      <div class="card-body">
-                        <p class="card-text text-center">{{poster.event.title}}</p>
-                        <p class="card-text"><span style="font-weight: bold;">POSTER NAME:&nbsp;</span>{{poster.postername}}
-          
+              {% if poster.status == 'pending' %}
+              <span class="text-warning rounded">Pending</span>
+              {% elif poster.status == 'accepted' %}
 
+              <span class="text-success rounded">Accepted</span>
+              {% elif poster.status == 'declined' %}
+              <span class="text-danger rounded">Declined</span>
+              {% endif %}
+            </p>
 
-                        </p>
-                        <p class="card-text"><span style="font-weight: bold;">STATUS:&nbsp;</span>
+            {% if poster.camera_ready_submition_status != 'active' %}
 
-                            {% if poster.status == 'pending' %}
-                            <span class="bg-warning rounded">Pending</span>
-                            {% elif poster.status == 'accepted' %}
+            <p class="card-text">
+              <span style="font-weight: bold"
+                >CAMERA READY PAPER STATUS:&nbsp;</span
+              >
 
-                            <span class="bg-success rounded">Accepted</span>
-                            {% elif poster.status == 'declined' %}
-                            <span class="bg-danger rounded">Declined</span>
-                            {% endif %}
-          
+              {% if poster.camera_ready_submition_status == 'pending' %}
+              <span class="bg-warning rounded">Pending</span>
+              {% elif poster.camera_ready_submition_status == 'accepted' %}
 
+              <span class="bg-success rounded">Accepted</span>
+              {% elif poster.camera_ready_submition_status == 'declined' %}
+              <span class="bg-danger rounded">Declined</span>
+              {% endif %}
+            </p>
 
-                        </p>
+            {% endif %}
 
-
-                        {% if poster.camera_ready_submition_status != 'active' %}
-
-                        <p class="card-text"><span style="font-weight: bold;">CAMERA READY PAPER STATUS:&nbsp;</span>
-
-                            {% if poster.camera_ready_submition_status == 'pending' %}
-                            <span class="bg-warning rounded">Pending</span>
-                            {% elif poster.camera_ready_submition_status == 'accepted' %}
-
-                            <span class="bg-success rounded">Accepted</span>
-                            {% elif poster.camera_ready_submition_status == 'declined' %}
-                            <span class="bg-danger rounded">Declined</span>
-                            {% endif %}
-          
-
-
-                        </p>
-
-                        {% endif %}
-
-                       <div class="text-center"><a href="{% url 'viewsubmitedposter' poster.id %}" class="btn btn-primary ">view</a></div> 
-
-                        
-                        
-                        
-        
-        
-
-      
-                      </div>
-                    </div>
+            <div class="text-center">
+              <a
+                href="{% url 'viewsubmitedposter' poster.id %}"
+                class="btn btn-primary"
+                >view</a
+              >
             </div>
-            {% endfor %}
+          </div>
         </div>
+      </div>
+      {% endfor %}
     </div>
+  </div>
 </section>
-
 
 {% endblock %}
